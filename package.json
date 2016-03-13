@@ -1,0 +1,23 @@
+{
+  "name": "Good-Orange",
+  "version": "0.1.0",
+  "description": "A restaurant recommendation website based on user reviews",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/gmnicke2/Good-Orange"
+  },
+  "author": "Garrett Nickel, Aaron Chiu, Raghav Narain, James Jia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gmnicke2/Good-Orange/issues"
+  },
+  "dependencies": {
+    "express": "^4.13.4",
+    "mysql": "^2.10.2",
+    "path": "^0.12.7"
+  }
+}

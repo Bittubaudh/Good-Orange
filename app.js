@@ -1,25 +1,11 @@
-var mysql = require("mysql")
+var express = require("express");
+var app = express();
 
-// Connect to database
-/*
-var connection = mysql.createConnection({
-	host: "hostname",
-	user: "db_user",
-	pw: "db_pw"
+app.get('/', function(req, res) {
+  res.send('Good Orange');
+  //TODO: sendFile with path to route actual HTML files
 });
 
-// On connection
-connection.connect(function(err) {
-	if(err) {
-		console.log("Error connecting to database");
-		return;
-	}
-	console.log("Connection established");
+app.listen(3000, function() {
+  console.log('Good Orange listening on port 3000');
 });
-
-// On connection termination
-connection.end(function(err) {
-	// 'Gracefully' terminate, wait until enqueued queries
-	// are good before COM_QUIT @ the MySQL server
-});
-*/
