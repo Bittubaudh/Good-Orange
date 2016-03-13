@@ -13,6 +13,8 @@ app.get('/', function(req, res) {
   //TODO: sendFile with path to route actual HTML files
 });
 
-app.listen(3000, function() {
+var port = process.env.PORT || 3000;
+
+app.listen(port, function() {
   console.log('Good Orange listening on port 3000');
 });
