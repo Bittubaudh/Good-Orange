@@ -1,5 +1,7 @@
 var express = require("express");
 var app = express();
+var pg = require('pg');
+pg.defaults.ssl = true;
 
 // Use files from /public directory
 app.use(express.static(__dirname+"/public"));
@@ -19,7 +21,4 @@ app.listen(port, function() {
   console.log('App listening');
 });
 
-var db = require('./db');
-
-db.connect();
-
+var routes = require('./routes')(app, pg);
