@@ -35,9 +35,7 @@ addRestaurant: function(req, pg, res, cb) {
       }
       else {
         console.log("Connected to DB, getting schemas...");
-        var request = req.params;
-
-        console.log(req.body);
+        var request = req.body;
 
         client
           .query("INSERT INTO restaurant VALUES ('" + request.name + "', '" + request.location + "', " + request.qualityrating + ", " + request.pricerating + ", '" + request.foodstyle + "' );")
@@ -46,7 +44,7 @@ addRestaurant: function(req, pg, res, cb) {
             result['status'] = 'SUCCESS';
             result['message'] = 'Restaurant ' + request.name + ' successfully added.';
             result['contents'] = request;
-            cb(results, res);
+            cb(result, res);
           });
       }
     });
