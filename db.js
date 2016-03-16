@@ -37,6 +37,8 @@ addRestaurant: function(req, pg, res, cb) {
         console.log("Connected to DB, getting schemas...");
         var request = req.params;
 
+        console.log(req.body);
+
         client
           .query("INSERT INTO restaurant VALUES ('" + request.name + "', '" + request.location + "', " + request.qualityrating + ", " + request.pricerating + ", '" + request.foodstyle + "' );")
           .on('end', function() {
