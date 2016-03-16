@@ -18,3 +18,12 @@ var port = process.env.PORT || 3000;
 app.listen(port, function() {
   console.log('App listening');
 });
+
+var pg = require("pg");
+// Connect to database
+
+pg.defaults.ssl = true;
+pg.connect(process.env.DATABASE_URL, function(err, client) {
+if(err) throw err;
+console.log("Connected to DB, getting schemas...");
+});
