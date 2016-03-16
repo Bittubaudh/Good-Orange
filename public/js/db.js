@@ -1,5 +1,4 @@
 $(document).ready(function() {
-  alert("hi");
   var pg = require("pg");
 
   // Connect to database
