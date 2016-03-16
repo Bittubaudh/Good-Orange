@@ -12,7 +12,7 @@ $(document).ready(function(){
         autoplaySpeed: 5000,
         fade: true,
         cssEase: 'linear'
-});
+    });
 });
 
 function resizeNavBar(){
