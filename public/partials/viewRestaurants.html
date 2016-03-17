@@ -1,0 +1,22 @@
+<a class = "button" href="#/home">Home</a>
+<a class = "button" href="#/addRestaurant">Add Restaurant</a>
+<a class = "button" href="#/viewRestaurants">View Restaurants</a>
+<a class = "button" href="#/reviews">Reviews</a>
+<a class = "button" href="#/search">Search</a>
+<a class = "button" href="#/login">Login</a>
+<a class = "button" href="#/newuser">Create an account</a>
+
+<h1>View all restaurants </h1>
+
+        </div>
+        <div class="col-md-10">
+            <!--Body content-->
+
+            <ul class="allRestaurants">
+                    <li ng-repeat="restaurant in restaurants">
+                        <h3 class = "restaurantName"><{{restaurant.name}}></a></h3>
+                    </li>
+            </ul>
+
+        </div>
+    </div>

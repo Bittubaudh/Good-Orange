@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <title>Restaurant Reviews</title>
+
+  <!-- Stylesheets -->
+    <link href='https://fonts.googleapis.com/css?family=Playfair+Display:400italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Oswald:700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Signika:700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Sans">
+  <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" type="text/css" href="./lib/slick-carousel/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="./lib/slick-carousel/slick/slick-theme.css"/>
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css" >
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css" rel="stylesheet">
+        <!-- Angular Scripts -->
+    <!-- NOTE: removing the ".min." can help debugging in the console-->
+    <script src="./lib/angular/angular.min.js"></script>
+    <script src="./lib/angular-route/angular-route.min.js"></script>
+    <script src="./js/app.js"></script>
+    <script src="./js/controllers.js"></script>
+
+
+</head>
+
+<body>
+<a class = "button" href="#/home">Home</a>
+<a class = "button" href="#/addRestaurant">Add Restaurant</a>
+<a class = "button" href="#/viewRestaurants">View Restaurants</a>
+<a class = "button" href="#/reviews">Reviews</a>
+<a class = "button" href="#/search">Search</a>
+<a class = "button" href="#/login">Login</a>
+<a class = "button" href="#/newuser">Create an account</a>
+
+<div id="menuStick" />
+<div data-sticky-container>
+    <div class="sticky" data-sticky data-options="marginTop:0; anchor:menuStick; stickyOn:small" style="width:100%">
+
+        <div class="title-bar" data-sticky  data-options="stickTo:top"  data-responsive-toggle="example-menu" data-hide-for="large"  >
+            <div class="title-bar-left">
+                <button class="menu-icon" type="button" data-toggle></button>
+                <div class="title-bar-title">Menu</div>
+            </div>
+        </div>
+
+        <div class="top-bar" id="example-menu"\>
+            <nav data-magellan data-options="activeClass:active; animationDuration:750;">
+                <div class="top-bar-left">
+                    <ul class="menu">
+                        <li class="menu-text">Restaurant Reviews</li>
+                        <li>
+                            <a href = "#heroSect" ><i class="fa fa-home"> </i></a></li>
+                        <li>
+                            <a href="#steps">How to </a>
+                        </li>
+                        <li>
+                            <a href="#promotion">Promotion</a>
+                        </li>
+                        <li>
+                            <a href="#vidReview">Videos</a>
+                        </li>
+                        <li>
+                            <a href="#sectCarousel">Reviews</a>
+                        </li>
+                        <li>
+                            <a href="#quoteSect">Quotes</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="top-bar-right">
+                    <ul class="dropdown menu" data-dropdown-menu>
+                        <li>
+                            <a data-open="loginModal" >Login</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="reveal" id="loginModal" data-reveal>
+    <div class="row">
+        <div class="medium-6 medium-centered large-12 large-centered columns">
+
+            <form>
+                <div class="row column log-in-form">
+                    <h4 class="text-center">Log in with your username and password</h4>
+                    <label>Username
+                        <input type="text" placeholder="Username">
+                    </label>
+                    <label>Password
+                        <input type="text" placeholder="Password">
+                    </label>
+                    <p><a type="submit" class="button expanded">Log In</a></p>
+                    <p class="text-center"><a href="#">New user? Create an account</a></p>
+                    <p class="text-center"><a href="#">Forgot your password?</a></p>
+                </div>
+            </form>
+
+        </div>
+        <button class="close-button" data-close aria-label="Close modal" type="button">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+</div>
+
+<div class="reveal" id="getRecModal" data-reveal>
+    <h1>Get a restaurant recommendation!</h1>
+    <label>Type your review here...
+        <textarea placeholder="Begin typing..."></textarea>
+    </label>
+    <p><a type="submit" class="button expanded">Submit</a></p>
+    <button class="close-button" data-close aria-label="Close modal" type="button">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="reveal" id="receiveRecModal" data-reveal>
+    <h1>Get restaurant recs!</h1>
+    <p><a type="submit" class="button expanded">Click here for a recommendation!</a></p>
+    <button class="close-button" data-close aria-label="Close modal" type="button">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<section id="heroSect" data-magellan-target="heroSect">
+    <section class="hero">
+        <div class="row intro">
+            <div class="small-centered medium-uncentered medium-6 large-8 columns">
+                <h1>Hungry? Tired of the same old restaurants?</h1>
+                <p>No worries, we're here to help you discover new, delicious food.</p>
+            </div>
+            <div class="small-centered medium-uncentered medium-6 large-4 columns">
+                <div class="tech-img"></div>
+            </div>
+        </div>
+    </section>
+
+</section>
+
+<div id = "sect1">
+
+<section id="steps" data-magellan-target="steps">
+    <div class="row">
+        <div class="large-4 columns">
+            <div class="image-wrapper overlay-fade-in">
+
+            <a data-open="loginModal"><img class = "img-circle" src="./data/login.png"/></a>
+            </div>
+            <h4>1. Create an account</h4>
+            <p>Click 'Login' and sign up for an account</p>
+        </div>
+
+        <div class="large-4 columns">
+            <div class="image-wrapper overlay-fade-in">
+            <a data-open="getRecModal"><img class = "img-circle" src="http://media.npr.org/assets/img/2012/09/10/restaurant-review-1f1ede4d672918ad61b6072191a48560445184ff-s900-c85.jpg" /></a>
+
+                </div>
+            <h4>2. Submit restaurant reviews</h4>
+            <p>You can submit reviews for restaurants you've been to based on the price and quality of food/service.
+            The more you submit, the better recs you'll receive!</p>
+        </div>
+
+        <div class="large-4 columns">
+            <div class="image-wrapper overlay-fade-in">
+            <a data-open="receiveRecModal"><img class = "img-circle" src="http://www.designtickle.com/cdnmedia/-/2012/10/culinary-food-chef-artwork/23-recommended-by-italys-chef.png" /></a>
+                </div>
+            <h4>3. Receive recommendations!</h4>
+            <p>
+                Once you've submitted reviews, we'll suggest restaurants for you to try based on your past reviews and preferences.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+</div>
+
+<div id = "promotion" data-magellan-target="promotion">
+<section class="row" >
+
+        <h1>
+            Get recs for the hottest restaurants!
+        </h1>
+
+</section>
+</div>
+
+<section id="vidReview" data-magellan-target="vidReview">
+<section class = "row">
+    <div class="alert columns small-12 large-12">
+    <span class = "anchor" id = "sect2"></span>
+    <h1>Video reviews submitted by users</h1>
+            <div class="flex-video">
+                <iframe width="350" height="300" src="https://www.youtube.com/embed/JgV3Hj08Xo8" frameborder="0" allowfullscreen></iframe>
+            </div>
+    </div>
+</section>
+
+</section>
+
+<section id = "sectCarousel" data-magellan-target="sectCarousel">
+    <h1>Check out some restaurants we've reviewed!</h1>
+    <div id = "carousel">
+        <div class="single-item">
+
+                <img src="http://indianapublicmedia.org/eartheats/files/2012/06/5115793807_9e843d90db_b-e1339037423853.jpg" alt="">
+
+                <img src="http://s3-media2.fl.yelpcdn.com/bphoto/hp68UjQbVKgOONgq003lnA/o.jpg" alt="">
+
+                <img src="http://www.seriouseats.com/images/2014/09/20140721-LA-korean-bbq-honey-pig-farley-elliott.jpg" alt="">
+        </div>
+    </div>
+</section>
+
+<section id="quoteSect" data-magellan-target="quoteSect">
+    <h1>Check out some real reviews!</h1>
+    <div class="testimonial-wrap">
+        <div class="row">
+            <div class="small-1 large-1 columns testimonial">
+                <div class="quote-marks">&#8220;</div>
+            </div>
+            <div class="small-11 large-11 columns testimonial">
+                <div class="quote">
+                    <p>I love the Dollar Menu at McDonald's! It really is the best bang for your buck.</p>
+                </div>
+                <div class="student">
+                    <div class="photo" >
+                    <img src = "http://xpo.castsheet.com/wp-content/uploads/2013/12/Kobe-in-suit-620x400.jpg"/>
+                    </div>
+                    <p>-Kobe Bryant</p>
+                    <p>Current NBA player</p>
+
+                </div>
+            </div>
+
+            <div class="small-1 large-1 columns testimonial">
+                <div class="quote-marks">&#8220;</div>
+            </div>
+            <div class="small-11 large-11 columns testimonial">
+                <div class="quote">
+                    <p>This Chipotle has the aboslute worst customer service. Warning: do not go here!</p>
+                </div>
+                <div class="student">
+                    <div class="photo">
+                        <img src = "http://www.eurweb.com/wp-content/uploads/2015/08/Michael-Jordan-768x1024.jpg"/>
+                    </div>
+                    <p>-Michael Jordan</p>
+                    <p>Former NBA player</p>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+  <!-- Scripts -->
+  
+  <script src="./lib/jquery-2.1.3.min/index.js"></script>
+  <script src="./foundation6_lib/js/foundation.min.js"></script>
+  <script src="./js/script.js"></script>
+
+  <script>
+    $(document).foundation();
+  </script>
+  <script src="http://localhost:35729/livereload.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="./lib/slick-carousel/slick/slick.min.js"></script>
+
+
+</body>
+
+
+
+        <footer class="footer">
+        <div class="row">
+            <div class="small-12 medium-6 large-6 columns">
+                <ul class="social_media">
+                    <li><p > <a href="http://www.facebook.com"> <i class="fi-social-facebook"></i></a>Check us out on Facebook!</p></li>
+                    <li><p > <a href="http://www.twitter.com"> <i class="fi-social-twitter"></i></a>Tweet at us!</p></li>
+                    <li><p > <a href="http://www.tumblr.com"> <i class="fi-social-tumblr"> </i></a>Check out our Tumblr!</p></li>
+                </ul>
+            </div>
+            <div class="small-12 medium-12 large-6 columns">
+                <p>Questions? Comments? Email us at restaurantreviews@gmail.com or give us a call at 1-800-123-4567</p>
+            </div>
+        </div>
+    </footer>
+
+</html>
