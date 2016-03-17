@@ -249,8 +249,6 @@ addRestaurant: function(req, pg, res, cb) {
       function(err, client, done) {
       if(err) {done(); console.log(err);}
       console.log("Connected to DB, getting schemas...");
-      console.log(req);
-      console.log(req.params);
 
       var un = req.params.username;
       var loc = req.params.location.replace(/\+/g, " ");

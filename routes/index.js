@@ -12,7 +12,6 @@ module.exports = function(app, pg) {
   	db.addRestaurant(req, pg, res, handleResponse);
   });
   app.delete('/api/v1/restaurants/:location', function(req, res) {
-    console.log("fdshajfa");
     db.deleteRestaurantByLocation(req, pg, res, handleResponse);
   });
 
