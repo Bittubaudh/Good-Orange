@@ -6,16 +6,17 @@
 <a class = "button" href="#/login">Login</a>
 <a class = "button" href="#/newuser">Create an account</a>
 <h1> Add Restaurant here </h1>
-
-
+<div ng-controller="restaurantCtrl">
+    {{submitted}}
+    	<form ng-submit="sendPost()">
 					<label>Restaurant name
-                        <input type="text" placeholder="Restaurant Name">
+                        <input ng-model="name" type="text" placeholder="Restaurant Name">
                     </label>
                     <label>Location
-                        <input type="text" placeholder="Location">
+                        <input ng-model="location" type="text" placeholder="Location">
                     </label>
                     <label>Foodstyle
-                    <select>
+                    <select ng-model="style">
                     	<option value="american">American</option>
                 		<option value="asian">Asian</option>
                 		<option value="italian">Italian</option>
@@ -27,4 +28,6 @@
   					</select>
   					    </label>
   						<br><br>
-                    <p><a type="submit" class="button expanded">Submit</a></p>
+                    <button type="submit" class = "button expanded">Send</button>
+        </form>
+</div>

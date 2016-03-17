@@ -14,15 +14,15 @@
 <h1>Search</h1>
 <section>
 Search: <input ng-model="query">
-
+<br><br>
 </section>
         </div>
         <div class="col-md-10">
             <!--Body content-->
 
-            <ul class="restaurantNames">
-                    <li ng-repeat="restaurant in restaurants | filter:query" class="thumbnail">
-                        <h3 class = "movieTitle"><a href="#/list/{{movie.rank}}" class="thumb"><img ng-src="./data/images/{{ restaurant.imdbID }}.jpg" alt="{{restaurant.title}}"></a></h3>
+            <ul class="restaurantNames" style="list-style-type: none;">
+                    <li ng-repeat="restaurant in restaurants | filter:query">
+                        <h3 class = "restaurantName">{{restaurant.name}}</a></h3>
                     </li>
             </ul>
 
