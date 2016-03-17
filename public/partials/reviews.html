@@ -5,20 +5,24 @@
 <a class = "button" href="#/viewRestaurants">View Restaurants</a>
 <a class = "button" href="#/reviews">Reviews</a>
 <a class = "button" href="#/search">Search</a>
+<a class = "button" href="#/deleteRestaurants">Remove restaurant</a>
 <a class = "button" href="#/login">Login</a>
 <a class = "button" href="#/newuser">Create an account</a>
+<div ng-controller="reviewCtrl">
+
 <h1>Submit Reviews</h1>
+<form ng-submit="sendPost()">
 					<label>Username
-                        <input type="text" placeholder="Username">
+                        <input ng-model="username" type="text" placeholder="Username">
                     </label>
 					<label>Restaurant Name
-                        <input type="text"placeholder="Restaurant Name">
+                        <input ng-model="restaurantname" type="text"placeholder="Restaurant Name">
                     </label>
                     <label>Location
-                        <input type="text" placeholder="Location">
+                        <input ng-model="location" type="text" placeholder="Location">
                     </label>
 			Quality rating
-             <select ng-model="orderProp">
+             <select ng-model="qualityrating">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -31,7 +35,7 @@
                 <option value="10">10</option>
 			</select>
 			Price rating
-             <select ng-model="orderProp">
+             <select ng-model="pricerating">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -44,9 +48,10 @@
                 <option value="10">10</option>
 			</select>
 <label>Type your review here...
-        <textarea rows="10" cols="30"placeholder="Begin typing..."></textarea>
+        <textarea ng-model="comment" rows="10" cols="30"placeholder="Begin typing..."></textarea>
     </label>
     <button type="submit" class = "button expanded">Send</button>
-
+    </form>
+</div>
 
 </div>

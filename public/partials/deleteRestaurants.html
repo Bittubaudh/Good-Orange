@@ -6,8 +6,8 @@
 <a class = "button" href="#/deleteRestaurants">Remove restaurant</a>
 <a class = "button" href="#/login">Login</a>
 <a class = "button" href="#/newuser">Create an account</a>
-<h1> Add Restaurant here!! </h1>
-<div ng-controller="restaurantCtrl">
+<h1>Delete restaurants</h1>
+<div ng-controller="deleteRestaurantsCtrl">
     <p>{{submitted}}</p>
     	<form ng-submit="sendPost()">
 					<label>Restaurant name
@@ -16,18 +16,6 @@
                     <label>Location
                         <input ng-model="location" type="text" placeholder="Location">
                     </label>
-
-                    <label>Foodstyle
-                    <select ng-model="foodstyle">
-                    	<option value="american">American</option>
-                		<option value="asian">Asian</option>
-                		<option value="italian">Italian</option>
-                		<option value="meditarranean">Meditarranean</option>
-                		<option value="mexican">Mexican</option>
-               			<option value="pasta">Pasta</option>
-                		<option value="pizza">Pizza</option>
-                		<option value="sandwich">Sandwich</option>
-  					</select>
   					    
   						<br><br>
                     <button type="submit" class = "button expanded">Send</button>
