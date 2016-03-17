@@ -156,16 +156,53 @@ addRestaurant: function(req, pg, res, cb) {
         console.log("Connected to DB, getting schemas...");
         var request = req.body;
 
+        // Insert new review
         client
           .query("INSERT INTO review VALUES (now(), " + request.qualityrating + ", '" + 
             request.comment + "', " + request.pricerating + ", '" + request.username+ "', '" + request.location + "', '" +
             request.restaurantname + "');")
           .on('end', function() {
-            done();
             result['status'] = 'SUCCESS';
             result['message'] = 'Review for ' + request.restaurantname + ', by ' + request.username + ', successfully added.';
             result['contents'] = request;
-            cb(result, res);
+
+            var newAvgPriceRating = 0;
+            var newAvgQualityRating = 0;
+            var rows = [];
+
+            // Update the restaurant's average qualityrating and pricerating
+            client
+              .query("SELECT * FROM review WHERE location='"+request.location+"';")
+              .on('row', function(row) {
+                rows.push(row);
+              })
+              .on('end', function() {
+                console.log(rows);
+                var totPriceRating = 0.0;
+                var totQualityRating = 0.0;
+                for(var i = 0; i < rows.length; i++) {
+                  totPriceRating += rows[i]['pricerating'];
+                  totQualityRating += rows[i]['qualityrating'];
+                }
+                console.log(totPriceRating);
+                console.log(totQualityRating);
+
+                newAvgPriceRating = Math.round(totPriceRating/rows.length);
+                newAvgQualityRating = Math.round(totQualityRating/rows.length);
+                console.log(newAvgPriceRating);
+                console.log(newAvgQualityRating);
+
+                var updateQuery = "UPDATE restaurant SET (qualityrating, pricerating) = ("+newAvgQualityRating+", "+
+                  newAvgPriceRating+") WHERE location='"+request.location+"';";
+                console.log(updateQuery);
+
+                client
+                .query(updateQuery)
+                .on('end', function() {
+                  done();
+                  cb(result, res);
+                });
+              });
           });
       }
     });
