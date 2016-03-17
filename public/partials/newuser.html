@@ -7,21 +7,24 @@
 <a class = "button" href="#/newuser">Create an account</a>
 
 <h1>Create an account!</h1>
-
+<div ng-controller="newuserCtrl">
+    {{submitted}}
+    {{hashedPW}}
+        <form ng-submit="sendPost()">
 					<label>Full name
-                        <input type="text" placeholder="Full name">
+                        <input ng-model="fullName" type="text" placeholder="Full name">
                     </label>
                     <label>Username
-                        <input type="text" placeholder="Username">
+                        <input ng-model="username" type="text" placeholder="Username">
                     </label>
                     <label>Password
-                        <input type="password" placeholder="Password">
+                        <input ng-model="password" type="password" placeholder="Password">
                     </label>	
                     <label>Zip Code
-                        <input type="text" placeholder="Zip Code">
+                        <input ng-model="zipcode" type="text" placeholder="Zip Code">
                     </label>
                     Choose favorite foodstyle:
-            <select ng-model="orderProp">
+            <select ng-model="orderProp" ng-model="foodStyle">
                         <option value="american">American</option>
                 		<option value="asian">Asian</option>
                 		<option value="italian">Italian</option>
@@ -32,3 +35,5 @@
                 		<option value="sandwich">Sandwich</option>
             </select>
                     <button type="submit" class = "button expanded">Send</button>
+        </form>
+</div>
