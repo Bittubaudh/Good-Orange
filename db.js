@@ -2,7 +2,7 @@ module.exports = {
   getAllRestaurants: function(pg, res, cb) {
     var results = [];
 
-    pg.connect('postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj', 
+    pg.connect(process.env.DATABASE_URL, 
       function(err, client, done) {
       if(err) {done(); console.log(err);}
       console.log("Connected to DB, getting schemas...");
@@ -26,7 +26,7 @@ addRestaurant: function(req, pg, res, cb) {
       'contents': {}
     };
 
-    pg.connect('postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj', 
+    pg.connect(process.env.DATABASE_URL, 
       function(err, client, done) {
       if(err) {
         done();
@@ -50,6 +50,26 @@ addRestaurant: function(req, pg, res, cb) {
     });
   },
 
+  deleteRestaurantByLocation: function(req, pg, res, cb) {
+    pg.connect(process.env.DATABASE_URL, 
+      function(err, client, done) {
+      if(err) {done(); console.log(err);}
+      console.log("Connected to DB, getting schemas...");
+
+      var loc = req.params.location.replace(/\+/g, " ");
+
+      var results = {"message": "Restaurant at "+loc+" NOT deleted"};
+
+      client
+        .query("DELETE FROM restaurant WHERE (location='"+loc+"');")
+        .on('end', function() {
+          done();
+          results['message'] = "Review for restaurant at "+loc+" SUCCESSFULLY deleted";
+          cb(results, res);
+        });
+    });
+  },
+
   addCustomer: function(req, pg, res, cb) {
     var result = {
       'status': 'ERROR',
@@ -57,7 +77,7 @@ addRestaurant: function(req, pg, res, cb) {
       'contents': {}
     };
 
-    pg.connect('postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj', 
+    pg.connect(process.env.DATABASE_URL, 
       function(err, client, done) {
       if(err) {
         done();
@@ -99,7 +119,7 @@ addRestaurant: function(req, pg, res, cb) {
   getCustomerByUN: function(req, pg, res, cb) {
     var results = [];
 
-    pg.connect('postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj', 
+    pg.connect(process.env.DATABASE_URL, 
       function(err, client, done) {
       if(err) {done(); console.log(err);}
       console.log("Connected to DB, getting schemas...");
@@ -119,7 +139,7 @@ addRestaurant: function(req, pg, res, cb) {
   getReviewByLocation: function(req, pg, res, cb) {
     var results = [];
 
-    pg.connect('postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj', 
+    pg.connect(process.env.DATABASE_URL, 
       function(err, client, done) {
       if(err) {done(); console.log(err);}
       console.log("Connected to DB, getting schemas...");
@@ -145,7 +165,7 @@ addRestaurant: function(req, pg, res, cb) {
       'contents': {}
     };
 
-    pg.connect('postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj', 
+    pg.connect(process.env.DATABASE_URL, 
       function(err, client, done) {
       if(err) {
         done();
@@ -170,31 +190,27 @@ addRestaurant: function(req, pg, res, cb) {
             var newAvgQualityRating = 0;
             var rows = [];
 
+            var loc = req.params.location.replace(/\+/g, " ");
+
             // Update the restaurant's average qualityrating and pricerating
             client
-              .query("SELECT * FROM review WHERE location='"+request.location+"';")
+              .query("SELECT * FROM review WHERE location='"+loc+"';")
               .on('row', function(row) {
                 rows.push(row);
               })
               .on('end', function() {
-                console.log(rows);
                 var totPriceRating = 0.0;
                 var totQualityRating = 0.0;
                 for(var i = 0; i < rows.length; i++) {
                   totPriceRating += rows[i]['pricerating'];
                   totQualityRating += rows[i]['qualityrating'];
                 }
-                console.log(totPriceRating);
-                console.log(totQualityRating);
 
                 newAvgPriceRating = Math.round(totPriceRating/rows.length);
                 newAvgQualityRating = Math.round(totQualityRating/rows.length);
-                console.log(newAvgPriceRating);
-                console.log(newAvgQualityRating);
 
                 var updateQuery = "UPDATE restaurant SET (qualityrating, pricerating) = ("+newAvgQualityRating+", "+
-                  newAvgPriceRating+") WHERE location='"+request.location+"';";
-                console.log(updateQuery);
+                  newAvgPriceRating+") WHERE location='"+loc+"';";
 
                 client
                 .query(updateQuery)
@@ -211,7 +227,7 @@ addRestaurant: function(req, pg, res, cb) {
   getAllReviews: function(pg, res, cb) {
     var results = [];
 
-    pg.connect('postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj', 
+    pg.connect(process.env.DATABASE_URL, 
       function(err, client, done) {
       if(err) {done(); console.log(err);}
       console.log("Connected to DB, getting schemas...");
@@ -225,6 +241,59 @@ addRestaurant: function(req, pg, res, cb) {
           done();
           cb(results, res);
         });
+    });
+  },
+
+  deleteReviewByUNandLocation: function(req, pg, res, cb) {
+    pg.connect(process.env.DATABASE_URL, 
+      function(err, client, done) {
+      if(err) {done(); console.log(err);}
+      console.log("Connected to DB, getting schemas...");
+      console.log(req);
+      console.log(req.params);
+
+      var un = req.params.username;
+      var loc = req.params.location.replace(/\+/g, " ");
+
+      var results = {"message": "Review for restaurant at "+loc+" by "+un+"+ NOT deleted"};
+
+      client
+        .query("DELETE FROM review WHERE (username='"+un+"' AND location='"+loc+"');")
+        .on('end', function() {
+          results['message'] = "Review for restaurant at "+loc+" by "+un+"+ SUCCESSFULLY deleted";
+
+          var newAvgPriceRating = 0;
+          var newAvgQualityRating = 0;
+          var rows = [];
+
+          // Update the restaurant's average qualityrating and pricerating
+          client
+            .query("SELECT * FROM review WHERE location='"+loc+"';")
+            .on('row', function(row) {
+              rows.push(row);
+            })
+            .on('end', function() {
+              var totPriceRating = 0.0;
+              var totQualityRating = 0.0;
+              for(var i = 0; i < rows.length; i++) {
+                totPriceRating += rows[i]['pricerating'];
+                totQualityRating += rows[i]['qualityrating'];
+              }
+
+              newAvgPriceRating = Math.round(totPriceRating/rows.length);
+              newAvgQualityRating = Math.round(totQualityRating/rows.length);
+
+              var updateQuery = "UPDATE restaurant SET (qualityrating, pricerating) = ("+newAvgQualityRating+", "+
+                newAvgPriceRating+") WHERE location='"+loc+"';";
+
+              client
+              .query(updateQuery)
+              .on('end', function() {
+                done();
+                cb(results, res);
+              });
+            });
+          });
     });
   }
 };

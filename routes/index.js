@@ -11,6 +11,10 @@ module.exports = function(app, pg) {
   app.post('/api/v1/restaurants', function(req, res) {
   	db.addRestaurant(req, pg, res, handleResponse);
   });
+  app.delete('/api/v1/restaurants/:location', function(req, res) {
+    console.log("fdshajfa");
+    db.deleteRestaurantByLocation(req, pg, res, handleResponse);
+  });
 
   // Customer endpoints
   app.get('/api/v1/customers/:username', function(req, res) {
@@ -29,5 +33,8 @@ module.exports = function(app, pg) {
   });
   app.post('/api/v1/reviews', function(req, res) {
     db.addReview(req, pg, res, handleResponse);
+  });
+  app.delete('/api/v1/reviews/:username/:location', function(req, res) {
+    db.deleteReviewByUNandLocation(req, pg, res, handleResponse);
   });
 }
