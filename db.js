@@ -61,12 +61,17 @@ addRestaurant: function(req, pg, res, cb) {
       var results = {"message": "Restaurant at "+loc+" NOT deleted"};
 
       client
-        .query("DELETE FROM restaurant WHERE (location='"+loc+"');")
+        .query("DELETE FROM review WHERE (location='"+loc+"');")
         .on('end', function() {
-          done();
-          results['message'] = "Review for restaurant at "+loc+" SUCCESSFULLY deleted";
-          cb(results, res);
-        });
+          client
+            .query("DELETE FROM restaurant WHERE (location='"+loc+"');")
+            .on('end', function() {
+              done();
+              results['message'] = "Review for restaurant at "+loc+" SUCCESSFULLY deleted";
+              cb(results, res);
+            });
+          });
+      
     });
   },
 
@@ -190,7 +195,7 @@ addRestaurant: function(req, pg, res, cb) {
             var newAvgQualityRating = 0;
             var rows = [];
 
-            var loc = req.params.location.replace(/\+/g, " ");
+            var loc = req.body.location.replace(/\+/g, " ");
 
             // Update the restaurant's average qualityrating and pricerating
             client
