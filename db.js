@@ -253,12 +253,12 @@ addRestaurant: function(req, pg, res, cb) {
       var un = req.params.username;
       var loc = req.params.location.replace(/\+/g, " ");
 
-      var results = {"message": "Review for restaurant at "+loc+" by "+un+"+ NOT deleted"};
+      var results = {"message": "Review for restaurant at "+loc+" by "+un+" NOT deleted"};
 
       client
         .query("DELETE FROM review WHERE (username='"+un+"' AND location='"+loc+"');")
         .on('end', function() {
-          results['message'] = "Review for restaurant at "+loc+" by "+un+"+ SUCCESSFULLY deleted";
+          results['message'] = "Review for restaurant at "+loc+" by "+un+" SUCCESSFULLY deleted";
 
           var newAvgPriceRating = 0;
           var newAvgQualityRating = 0;
