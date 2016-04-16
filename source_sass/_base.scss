@@ -1,0 +1,476 @@
+// Add any custom Sass & CSS here
+//$topbar-background: pink;
+
+@mixin margin-center {
+  margin: 0 auto;
+}
+@mixin fontSize($size){
+  font-size: $size;
+}
+
+@mixin heightWidth100{
+  height: 100%;
+  width: 100%;
+}
+
+
+h1{
+  font-family: 'Oswald', sans-serif;
+  padding-top: 7vh;
+  padding-bottom: 7vh;
+  @include fontSize(3.5rem);
+}
+
+body {
+  @include margin-center;
+  background-color: lightgrey;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  text-align: center;
+  font-family: 'Droid Sans', serif;
+}
+
+.row {
+  max-width: 1200px;
+}
+
+
+
+
+//navBar stuff
+.title-bar{
+  bottom: auto !important;
+  top: auto !important;
+  z-index: 99999999999999999;
+}
+.top-bar {
+  width: 100%;
+  z-index: 999999;
+  @include fontSize(20px);
+  transition: height .5s ease;
+  height: 4.5em;
+  bottom: auto !important;
+}
+@include breakpoint(medium down) {
+  .top-bar li{
+  display: block;
+}
+}
+
+@media screen and (min-width: 40em){
+.top-bar .top-bar-right, .top-bar .top-bar-left {
+  transition: padding-top .5s ease;
+  padding-top: 1.4em;
+}
+.top-bar.shrink {
+  height: 3em;
+}
+.top-bar.shrink .top-bar-right, .top-bar.shrink .top-bar-left {
+  padding-top: 0em;
+}
+}
+.active{
+  background-color: black;
+  color: white !important;
+}
+//steps section
+#steps{
+  padding-top: 250px;
+  padding-bottom: 250px;
+  img{
+  height: 300px;
+  width: 300px;
+}
+}
+@include breakpoint(small only) {
+  #steps{
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+  #steps img {
+    @include heightWidth100;
+  }
+}
+@include breakpoint(medium only) {
+  #steps{
+    padding-top: 50px;
+    padding-bottom: 50px;
+    img {
+    height: 200px;
+    width: 200px;
+  }
+  }
+
+}
+
+.img-circle {
+  border-radius: 50%;
+}
+
+//promotion section
+
+#promotion{
+  background-image: url("http://static.canpages.ca/images/backgrounds/80009000/80009000_1.jpg");
+  min-height: 60em;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  h1{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    @include fontSize(3rem);
+  }
+}
+
+//Carousel section
+@include breakpoint(small only){
+  .slick-prev:before,
+  .slick-next:before {
+    display:none;
+  }
+}
+.slick-prev:before,
+.slick-next:before {
+  color:black !important;
+}
+
+@include breakpoint(medium up) {
+  .overlay-fade-in {
+
+    img {
+      transition: all 0.3s linear;
+    }
+    &:hover img {
+      transform: scale(1.3);
+    }
+
+  }
+}
+
+#carousel{
+   position: relative;
+   width: 70%;
+   height: 70%;
+   margin: 0 auto;
+ }
+#sectCarousel{
+  //padding-top: 100px;
+  position: relative;
+  background-color: white;
+  @include heightWidth100;
+}
+.single-item {
+  position: relative;
+  @include heightWidth100;
+  img {
+    position: relative;
+    max-width: 100%;
+    height: auto;
+    border-radius: 60px;
+  }
+}
+
+
+#sect1{
+  background-color: whitesmoke;
+}
+
+#blocks img{
+  @include heightWidth100;
+}
+
+
+
+//footer stuff
+@include breakpoint(small only){
+  .footer{
+    @include fontSize(10px);
+  }
+}
+.footer {
+  background-color: #292c2f;
+  text-align: center;
+  @include fontSize(1.2rem);
+  padding: 4rem;
+  color: #fff;
+  .inline-list a {
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    background-color: #33383b;
+    border-radius: 2px;
+    @include fontSize(1.5rem);
+    color: #fff;
+    text-align: center;
+    line-height: 35px;
+    margin: 0 3px 0 0;
+  }
+
+  .social_media {
+    list-style-type: none;
+    margin: 0;
+    text-align: left;
+    color: #fff;
+
+    li {
+      margin-bottom: 2rem;
+
+      p {
+        padding-left: 5rem;
+      }
+    }
+
+    i {
+      position: absolute;
+      background-color: #33383b;
+      color: #fff;
+      @include fontSize(2rem);
+      border-radius: 50%;
+      line-height: 1;
+      margin: 0 0 0 -4rem;
+      vertical-align: middle;
+      padding: .25em .45em;
+    }
+  }
+
+  .footer-links a {
+    list-style: none;
+    font-weight: normal;
+    color: #fff;
+    padding: 3rem 0 2rem;
+    margin: 0;
+    @include fontSize(0.875rem);
+
+    &::after {
+      content: "•";
+      padding: 0 0.2rem 0 0.4rem;
+    }
+
+    &:last-child::after {
+      content: "";
+      padding: 0 0.4rem 0 0.8rem;
+    }
+  }
+
+  @media only screen and (min-width: 40.063em) {
+
+    p {
+      text-align: left;
+    }
+
+    .social {
+      text-align: left;
+      margin: 0;
+    }
+
+    .contact {
+      text-align: left;
+      > i {
+        margin-right: 1rem;
+      }
+    }
+
+  }
+}
+
+.logo {
+  color: #fff;
+  @include fontSize(1.5rem);
+
+  i {
+    margin-right: 0.5rem;
+  }
+}
+
+/*
+this is for popup modal login box
+*/
+// Default medium-gray color
+$medium-gray: #cacaca;
+// Default global padding
+$global-padding: 1rem;
+// Global value used for all elements that have a border radius.
+$global-radius: 3px;
+
+// Setting the form border color
+$form-border-color: $medium-gray;
+// Setting the form padding
+$form-padding: $global-padding;
+// Setting the form border radius
+$form-radius: $global-radius;
+
+.reveal{
+  z-index: 999999999999999999999;
+}
+
+.log-in-form {
+  //border: 1px solid $form-border-color;
+  padding: $form-padding;
+  //border-radius: $form-radius;
+  @include heightWidth100;
+}
+
+
+/*
+hero styling stuff
+*/
+
+
+.hero {
+  background: url('http://digitalresult.com/wp-content/uploads/2015/11/wine-desktop-wallpapers-15.jpeg') no-repeat center center;
+  background-size: cover;
+  @include heightWidth100;
+  color: white;
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 100vh;
+  position: relative;
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: linear-gradient(to bottom right,white, black);
+    opacity: .8;
+  }
+  .intro {
+    padding: 3rem;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  h1 {
+    //color: #fff;
+    color:black;
+    @include fontSize(3rem);
+    line-height: 1.5em;
+    letter-spacing: -0.025em;
+    font-weight: 300;
+    text-align: center;
+  }
+  p {
+    //color: #fff;
+    font-family: 'Ubuntu', sans-serif;
+    color:white;
+    line-height: 1.75em;
+    font-weight: 200;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  .tech-img {
+    background: url('http://i.istockimg.com/file_thumbview_approve/61311456/5/stock-illustration-61311456-knife-fork-and-spoon-icons-set-in-flat-style.jpg') no-repeat center center;
+    background-size: cover;
+    height: 9rem;
+    width: 9rem;
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto;
+  }
+  @media screen and (min-width: 64em) {
+    .tech-img {
+      height: 18rem;
+      width: 18rem;
+    }
+    h1 {
+      padding-top: 4.5rem;
+      text-align: right;
+      @include fontSize(3.5rem);
+    }
+    p {
+      text-align: right;
+    }
+  }
+}
+
+/*
+testimonial quote
+*/
+  #quoteSect {
+    padding-bottom: 200px;
+
+    @include breakpoint(small only) {
+      #quoteSect {
+        padding-top: 100px;
+        padding-bottom: 100px;
+      }
+    }
+  }
+
+h2 {
+  margin-top: 40px;
+  font-weight: 200;
+  color: #333;
+}
+
+.centered-text {
+  text-align: center;
+}
+
+.quote-marks {
+  @include fontSize(100px);
+  font-family: Garamond;
+  color: black;
+}
+
+.move-right {
+  position: relative;
+  text-align: right;
+}
+
+.quote {
+  border-radius: 5px;
+  font-family: 'Signika', 'Oswald';
+  color: #000080;
+  p {
+    font-weight: 300;
+  }
+}
+
+@media only screen and (max-width: 40em) {
+  .quote p {
+
+    padding-left: 20px;
+  }
+}
+
+.student {
+  margin-left: 25px;
+  margin-bottom: 80px;
+  .photo img{
+    //background-color: #ccc;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    float: left;
+    margin-right: 15px;
+  }
+  p {
+    font-family: 'Playfair Display', serif;
+    position: relative;
+    top: 5px;
+    &:nth-child(2) {
+      @include fontSize(16px);
+      font-weight: 500;
+      margin-bottom: 0;
+    }
+    &:nth-child(3) {
+      font-family: 'Signika';
+      @include fontSize(14px);
+      font-weight: 400;
+      color: black;
+    }
+  }
+}
+
+
+
