@@ -11,11 +11,17 @@ module.exports = function(app, pg) {
   app.post('/api/v1/restaurants', function(req, res) {
   	db.addRestaurant(req, pg, res, handleResponse);
   });
+  app.get('api/v1/restaurants/:location', function(req, res) {
+    db.getRestaurantByLocation(req, pg, res, handleResponse);
+  });
   app.delete('/api/v1/restaurants/:location', function(req, res) {
     db.deleteRestaurantByLocation(req, pg, res, handleResponse);
   });
 
   // Customer endpoints
+  app.get('/api/v1/customers', function(req, res) {
+      db.getAllCustomers(pg, res, handleResponse);
+  });
   app.get('/api/v1/customers/:username', function(req, res) {
       db.getCustomerByUN(req, pg, res, handleResponse);
   });

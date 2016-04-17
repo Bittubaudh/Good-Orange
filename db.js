@@ -2,7 +2,7 @@ module.exports = {
   getAllRestaurants: function(pg, res, cb) {
     var results = [];
 
-    pg.connect(process.env.DATABASE_URL, 
+    pg.connect("postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj", 
       function(err, client, done) {
       if(err) {done(); console.log(err);}
       console.log("Connected to DB, getting schemas....");
@@ -50,8 +50,29 @@ addRestaurant: function(req, pg, res, cb) {
     });
   },
 
+  //need to test
+  getRestaurantByLocation: function(req, pg, res, cb) {
+    var results = [];
+
+    pg.connect("postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj", 
+      function(err, client, done) {
+      if(err) {done(); console.log(err);}
+      console.log("Connected to DB, getting schemas...");
+
+      client
+        .query("SELECT * FROM restaurant WHERE location='"+req.params.location+"';")
+        .on('row', function(row) {
+          results.push(row);
+        })
+        .on('end', function() {
+          done();
+          cb(results[0], res);
+        });
+    });
+  },
+
   deleteRestaurantByLocation: function(req, pg, res, cb) {
-    pg.connect(process.env.DATABASE_URL, 
+    pg.connect("postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj", 
       function(err, client, done) {
       if(err) {done(); console.log(err);}
       console.log("Connected to DB, getting schemas...");
@@ -72,6 +93,27 @@ addRestaurant: function(req, pg, res, cb) {
             });
           });
       
+    });
+  },
+
+
+  getAllCustomers: function(pg, res, cb) {
+    var results = [];
+
+    pg.connect("postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj", 
+      function(err, client, done) {
+      if(err) {done(); console.log(err);}
+      console.log("Connected to DB, getting schemas....");
+
+      client
+        .query("SELECT * FROM customer;")
+        .on('row', function(row) {
+          results.push(row);
+        })
+        .on('end', function() {
+          done();
+          cb(results, res);
+        });
     });
   },
 
@@ -124,7 +166,7 @@ addRestaurant: function(req, pg, res, cb) {
   getCustomerByUN: function(req, pg, res, cb) {
     var results = [];
 
-    pg.connect(process.env.DATABASE_URL, 
+    pg.connect("postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj", 
       function(err, client, done) {
       if(err) {done(); console.log(err);}
       console.log("Connected to DB, getting schemas...");
