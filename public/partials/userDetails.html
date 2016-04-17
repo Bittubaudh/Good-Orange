@@ -1,0 +1,9 @@
+<h1>Username: {{user.username}}</h1>
+Zipcode: {{user.zipcode}}
+
+<h1>Favorite foodstyles</h1>
+<ul style="list-style-type: none;">
+    <li ng-repeat="fav in user.favoritefoodstyles">
+        <h3>{{fav}}</h3>
+    </li>
+</ul>

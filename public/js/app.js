@@ -1,4 +1,4 @@
-var app=angular.module("restaurantModule",["ngRoute", 'movieControllers']);
+var app=angular.module("restaurantModule",["ngRoute", 'restaurantController']);
 app.config(['$routeProvider',
     function($routeProvider) {
     $routeProvider.
@@ -33,9 +33,21 @@ app.config(['$routeProvider',
         templateUrl: 'partials/viewRestaurants.html',
         controller: 'viewRestaurantsCtrl'
     }).
+    when('/viewRestaurants/:location', {
+        templateUrl: 'partials/restaurantDetails.html',
+        controller: 'restaurantDetailsCtrl'
+    }).
     when('/deleteRestaurants', {
         templateUrl: 'partials/deleteRestaurants.html',
         controller: 'deleteRestaurantsCtrl'
+    }).
+    when('/viewUsers', {
+        templateUrl: 'partials/viewUsers.html',
+        controller: 'viewUsersCtrl'
+    }).
+    when('/viewUsers/:username', {
+        templateUrl: 'partials/userDetails.html',
+        controller: 'userDetailsCtrl'
     }).
     otherwise({
         redirectTo: '/home'

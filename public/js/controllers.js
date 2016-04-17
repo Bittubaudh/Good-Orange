@@ -1,7 +1,7 @@
 /* Sample Controller */
-var movieControllers = angular.module('movieControllers', []);
+var restaurantController = angular.module('restaurantController', []);
 
-movieControllers.controller('homeCtrl', ['$scope', '$http', '$rootScope',
+restaurantController.controller('homeCtrl', ['$scope', '$http', '$rootScope',
     function($scope, $http, $rootScope) {
         $http.get('/api/v1/restaurants').success(function(data) {
             $scope.restaurants = data;
@@ -11,7 +11,7 @@ movieControllers.controller('homeCtrl', ['$scope', '$http', '$rootScope',
     }]);
 
 
-movieControllers.controller('searchCtrl', ['$scope', '$http', '$rootScope',
+restaurantController.controller('searchCtrl', ['$scope', '$http', '$rootScope',
     function($scope, $http, $rootScope) {
         $http.get('/api/v1/restaurants').success(function(data) {
             $scope.restaurants = data;
@@ -20,7 +20,7 @@ movieControllers.controller('searchCtrl', ['$scope', '$http', '$rootScope',
         $scope.orderProp = 'name';
     }]);
 
-movieControllers.controller('loginCtrl', ['$scope', '$http', '$rootScope',
+restaurantController.controller('loginCtrl', ['$scope', '$http', '$rootScope',
     function($scope, $http, $rootScope) {
         $http.get('/api/v1/restaurants').success(function(data) {
             $scope.restaurants = data;
@@ -28,7 +28,7 @@ movieControllers.controller('loginCtrl', ['$scope', '$http', '$rootScope',
 
         $scope.orderProp = 'name';
     }]);
-movieControllers.controller('newuserCtrl', ['$scope', '$http', '$rootScope',
+restaurantController.controller('newuserCtrl', ['$scope', '$http', '$rootScope',
     function($scope, $http, $rootScope) {
         $http.get('/api/v1/restaurants').success(function(data) {
             $scope.restaurants = data;
@@ -36,7 +36,39 @@ movieControllers.controller('newuserCtrl', ['$scope', '$http', '$rootScope',
 
         $scope.orderProp = 'name';
     }]);
-movieControllers.controller('addRestaurantCtrl', ['$scope', '$http', '$rootScope',
+restaurantController.controller('addRestaurantCtrl', ['$scope', '$http', '$rootScope',
+    function($scope, $http, $rootScope) {
+        $http.get('/api/v1/restaurants').success(function(data) {
+            $scope.restaurants = data;
+        });
+        $scope.name = "";
+        $scope.location = "";
+        $scope.foodstyle = "";
+        $scope.qualityrating = 0;
+        $scope.pricerating = 0;
+
+
+        $scope.orderProp = 'name';
+        $scope.submitted = "";
+
+        $scope.addRestaurant = function() {
+
+            var data = {
+                name: $scope.name,
+                location: $scope.location,
+                qualityrating: 0,
+                pricerating: 0,
+                foodstyle: $scope.foodstyle,
+            };
+            console.log(JSON.stringify(data));
+            $http.post("/api/v1/restaurants", JSON.stringify(data)).success(function(data, status) {
+                $scope.submitted = "Added restaurant!";
+                $scope.name = "";
+                $scope.location = "";
+            });
+        };
+    }]);
+restaurantController.controller('viewRestaurantsCtrl', ['$scope', '$http', '$rootScope',
     function($scope, $http, $rootScope) {
         $http.get('/api/v1/restaurants').success(function(data) {
             $scope.restaurants = data;
@@ -44,17 +76,9 @@ movieControllers.controller('addRestaurantCtrl', ['$scope', '$http', '$rootScope
 
         $scope.orderProp = 'name';
     }]);
-movieControllers.controller('viewRestaurantsCtrl', ['$scope', '$http', '$rootScope',
-    function($scope, $http, $rootScope) {
-        $http.get('/api/v1/restaurants').success(function(data) {
-            $scope.restaurants = data;
-        });
-
-        $scope.orderProp = 'name';
-    }]);
 
 
-movieControllers.controller('restaurantCtrl',  ['$scope', '$http',
+restaurantController.controller('restaurantCtrl',  ['$scope', '$http',
     function ($scope, $http) {
         $scope.name = "";
         $scope.location = "";
@@ -65,27 +89,28 @@ movieControllers.controller('restaurantCtrl',  ['$scope', '$http',
         //console.log("BEFORE POST");
         //console.log("!!!!!!");
         $scope.sendPost = function() {
-            var data = $.param({
+            var data = {
                 name: $scope.name,
                 location: $scope.location,
                 foodstyle: $scope.foodstyle,
                 qualityrating: $scope.qualityrating,
                 pricerating: $scope.pricerating
-            });
+            };
 
             //console.log("!!!!!!");
             console.log(data);
-            $.post("/api/v1/restaurants", data).success(function(data, status) {
+            $http.post("/api/v1/restaurants", JSON.stringify(data)).success(function(data, status) {
                 $scope.submitted = "Added restaurant!";
             });
             //console.log("AFTER POST");
-        }
+        };
     }]);
-movieControllers.controller('reviewCtrl',  ['$scope', '$http',
+
+restaurantController.controller('reviewCtrl',  ['$scope', '$http',
     function ($scope, $http) {
         $scope.username = "";
         $scope.location = "";
-        $scope.restaurantname = "";
+        $scope.name = "";
         $scope.qualityrating = 0;
         $scope.pricerating = 0;
         $scope.comment = "";
@@ -93,25 +118,25 @@ movieControllers.controller('reviewCtrl',  ['$scope', '$http',
         console.log("BEFORE POST");
         console.log("!!!!!!");
         $scope.sendPost = function() {
-            var data = $.param({
+            var data = {
                 username: $scope.username,
                 location: $scope.location,
                 comment: $scope.comment,
                 qualityrating: $scope.qualityrating,
                 pricerating: $scope.pricerating,
-                restaurantname: $scope.restaurantname
-            });
+                name: $scope.name
+            };
 
             console.log("!!!!!!");
             console.log(data);
-            $.post("/api/v1/reviews", data).success(function(data, status) {
+            $.post("/api/v1/reviews", JSON.stringify(data)).success(function(data, status) {
                 $scope.submitted = "Added review!";
             });
             console.log("AFTER POST");
         }
     }]);
 
-movieControllers.controller('deleteRestaurantsCtrl', ['$scope', '$http',
+restaurantController.controller('deleteRestaurantsCtrl', ['$scope', '$http',
     function($scope, $http) {
         $scope.name = "";
         $scope.location = "";
@@ -137,3 +162,47 @@ $http.delete(urlName).success(function(data, status){
         
     }]);
 
+restaurantController.controller('restaurantDetailsCtrl', ['$scope', '$routeParams', '$filter','$http', '$rootScope',
+    function($scope, $routeParams, $filter, $http, $rootScope) {
+        $http.get('/api/v1/restaurants/' + $routeParams.location).success(function(data) {
+            $scope.restaurant = data;
+            //$scope.task = $filter('filter')(data, {_id: $scope.id})[0];
+        });
+
+        $scope.orderProp = 'name';
+    }]);
+
+restaurantController.controller('viewRestaurantsCtrl', ['$scope', '$routeParams', '$filter','$http', '$rootScope',
+    function($scope, $routeParams, $filter, $http, $rootScope) {
+        $http.get('/api/v1/restaurants').success(function(data) {
+            $scope.restaurants = data;
+        });
+
+        $scope.orderProp = 'name';
+        $scope.deleteRestaurant = function(location){
+            var urlName = "/api/v1/restaurants/" + location;
+            $http.delete(urlName).success(function(data, status){
+            });
+            $http.get('/api/v1/restaurants').success(function(data) {
+                $scope.restaurants = data;
+            });
+        };
+    }]);
+
+restaurantController.controller('userDetailsCtrl', ['$scope', '$routeParams', '$filter','$http', '$rootScope',
+    function($scope, $routeParams, $filter, $http, $rootScope) {
+        $http.get('/api/v1/customers/' + $routeParams.username).success(function(data) {
+            $scope.user = data;
+        });
+
+        $scope.orderProp = 'name';
+    }]);
+
+restaurantController.controller('viewUsersCtrl', ['$scope', '$routeParams', '$filter','$http', '$rootScope',
+    function($scope, $routeParams, $filter, $http, $rootScope) {
+        $http.get('/api/v1/customers').success(function(data) {
+            $scope.users = data;
+        });
+
+        $scope.orderProp = 'username';
+    }]);

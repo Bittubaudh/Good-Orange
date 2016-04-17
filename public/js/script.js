@@ -1,1 +1,31 @@
-function resizeNavBar(){$(document).on("scroll",function(){$(document).scrollTop()>50?$(".top-bar").addClass("shrink"):$(".top-bar").removeClass("shrink")})}$(document).ready(function(){$(".single-item").slick({dots:!0,infinite:!0,speed:300,slidesToShow:1,slidesToShow:1,slidesToScroll:1,autoplay:!0,autoplaySpeed:5e3,fade:!0,cssEase:"linear"})}),window.addEventListener("load",resizeNavBar);
+// Write any custom javascript functions here
+
+$(document).ready(function(){
+    $('.single-item').slick({
+        dots: true,
+        infinite: true,
+        speed: 300,
+        slidesToShow: 1,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 5000,
+        fade: true,
+        cssEase: 'linear'
+    });
+});
+
+function resizeNavBar(){
+    $(document).on("scroll", function(){
+        if($(document).scrollTop() > 50){
+            $(".top-bar").addClass("shrink");
+        }
+        else
+        {
+            $(".top-bar").removeClass("shrink");
+        }
+    });
+}
+
+window.addEventListener('load', resizeNavBar);
+
