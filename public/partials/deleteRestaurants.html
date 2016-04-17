@@ -2,13 +2,11 @@
 <h1>Delete restaurants</h1>
 <div ng-controller="deleteRestaurantsCtrl">
     <p>{{submitted}}</p>
-    	<form ng-submit="sendPost()">
-					<label>Restaurant name
-                        <input ng-model="name" type="text" placeholder="Restaurant Name">
-                    </label>
-                    <label>Location
-                        <input ng-model="location" type="text" placeholder="Location">
-                    </label>
+    	<form ng-submit="deleteRestaurant(restaurant)">
+            <label> Restaurant Name and location </label>
+            <select ng-model="name">
+                <option ng-repeat="restaurant in restaurants | orderBy: orderProp">{{restaurant.name}} | {{restaurant.location}}</option>
+            </select>
   					    
   						<br><br>
                     <button type="submit" class = "button expanded">Send</button>

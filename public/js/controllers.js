@@ -25,6 +25,24 @@ restaurantController.controller('loginCtrl', ['$scope', '$http', '$rootScope',
         $http.get('/api/v1/restaurants').success(function(data) {
             $scope.restaurants = data;
         });
+        $rootScope.user = "";
+
+        $scope.logIn = function(){
+            $http.get('/api/v1/customers/' + $scope.username + '/' + $scope.password).success(function(data){
+                if(data === 'accepted')
+                {
+                    $rootScope.user = $scope.username;
+                    $scope.submitted = "Successfully logged in!";
+                }
+                else //data == 'rejected'
+                {
+                    $rootScope.user = "";
+                    $scope.submitted = "Invalid username or password. Please try again.";
+                }
+
+
+            });
+        }
 
         $scope.orderProp = 'name';
     }]);
@@ -34,7 +52,7 @@ restaurantController.controller('newuserCtrl', ['$scope', '$http', '$rootScope',
         $scope.orderProp = 'name';
 
         $scope.createUser = function(){
-            var data = {fullname: $scope.fullname, username: $scope.username, hashedpassowrd: $scope.password, zipcode: $scope.zipcode, 'favoritefoodstyles[]': ["mexican"]};
+            var data = {fullname: $scope.fullname, username: $scope.username, password: $scope.password, zipcode: $scope.zipcode, 'favoritefoodstyles[]': ["mexican"]};
             $http.post('/api/v1/customers', JSON.stringify(data)).success(function(){
                 $scope.submitted = "Successfully created user!";
                 $scope.fullname = "";
@@ -87,6 +105,24 @@ restaurantController.controller('viewRestaurantsCtrl', ['$scope', '$http', '$roo
         });
 
         $scope.orderProp = 'name';
+        $scope.deleteRestaurant = function(){
+            console.log("delete");
+        };
+        /*
+        $scope.deleteRestaurant = function(restaurant) {
+            console.log("delete");
+            var data = $.param({
+                name: restaurant.name,
+                location: restaurant.location
+
+            });
+            var urlName = "/api/v1/restaurants/" + restaurant.location;
+            $http.delete(urlName).success(function (data, status) {
+                $http.get('/api/v1/restaurants').success(function (data) {
+                    $scope.restaurants = data;
+                });
+            });
+        };*/
     }]);
 
 
@@ -120,7 +156,6 @@ restaurantController.controller('restaurantCtrl',  ['$scope', '$http',
 
 restaurantController.controller('reviewCtrl',  ['$scope', '$http',
     function ($scope, $http) {
-        $scope.username = "";
         $scope.location = "";
         $scope.name = "";
         $scope.qualityrating = 0;
@@ -129,7 +164,7 @@ restaurantController.controller('reviewCtrl',  ['$scope', '$http',
         $scope.submitted = "";
         $scope.addReview = function() {
             var data = {
-                username: $scope.username,
+                username: $rootScope.user,
                 location: $scope.location,
                 comment: $scope.comment,
                 qualityrating: parseInt($scope.qualityrating),
@@ -148,23 +183,24 @@ restaurantController.controller('reviewCtrl',  ['$scope', '$http',
 
 restaurantController.controller('deleteRestaurantsCtrl', ['$scope', '$http',
     function($scope, $http) {
+        $http.get('/api/v1/restaurants').success(function(data) {
+            $scope.restaurants = data;
+            //$scope.task = $filter('filter')(data, {_id: $scope.id})[0];
+        });
         $scope.name = "";
         $scope.location = "";
+        $scope.orderProp = "name";
         $scope.submitted = "Not submitted yet!";
-                $scope.sendPost = function() {
+                $scope.deleteRestaurant = function(restaurant) {
             var data = $.param({
                  name: $scope.name,
                  location: $scope.location
                
             });
-            console.log("!!!!!!");
-            console.log(data);
         var urlName = "/api/v1/restaurants/" + $scope.location;
-        console.log(urlName);
 $http.delete(urlName).success(function(data, status){
         $scope.submitted = "Deleted restaurant!";
 });
-        console.log("DONE");
         }
         
 
@@ -179,9 +215,9 @@ restaurantController.controller('restaurantDetailsCtrl', ['$scope', '$routeParam
             //$scope.task = $filter('filter')(data, {_id: $scope.id})[0];
         });
 
-        $http.get('api/v1/reviews').success(function(data){
+        $http.get('api/v1/reviews/location/' + $routeParams.location).success(function(data){
             $scope.reviews = data;
-        })
+        });
         $scope.orderProp = 'name';
     }]);
 

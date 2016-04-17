@@ -58,6 +58,6 @@ app.config(['$routeProvider',
         controller: 'recsCtrl'
     }).
     otherwise({
-        redirectTo: '/home'
+        redirectTo: '/login'
     });
 }]);

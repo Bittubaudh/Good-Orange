@@ -1,15 +1,17 @@
+<div ng-controller="loginCtrl">
 <h1> Login </h1>
 
-            <form>
+
                 <div class="row column log-in-form">
                     <h4 class="text-center">Log in with your username and password</h4>
                     <label>Username
-                        <input type="text" placeholder="Username">
+                        <input type="text" placeholder="Username" ng-model="username">
                     </label>
                     <label>Password
-                        <input type="password" placeholder="Password">
+                        <input type="password" placeholder="Password" ng-model="password">
                     </label>
-                    <button class="button">Sign in</button>
+                    <button class="button" ng-click="signIn()">Sign in</button>
                     <p class="text-center"><a href="#/newuser">New user? Create an account</a></p>
                 </div>
-            </form>
+                {{scope.submitted}}
+</div>
