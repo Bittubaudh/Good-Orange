@@ -18,14 +18,43 @@ module.exports = {
     });
   },
 
-addRestaurant: function(req, pg, res, cb) {
+  checkAndAddRestaurant: function(req, pg, res, cb) {
+    var results = [];
+    pg.connect("postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj",
+      function(err, client, done) {
+        if(err) {done(); console.log(err);}
+        console.log("Connected to DB,  getting schemas...");
+
+        client
+          .query("SELECT * FROM restaurant WHERE location = '" + request.location + "';")
+          .on('row', function(row) {
+            results.push(row);
+          })
+          .on('end', function() {
+            //done();
+            if(results.length == 0) {
+              addRestaurant(req, pg, res, cb);
+            } else {
+              done();
+               var result = {
+                'status': 'ERROR',
+                'message': 'Restaurant AlreadY Exists',
+                'contents': {}
+               };
+              cb(result, res);
+            }
+          });
+      });
+  },
+
+  addRestaurant: function(req, pg, res, cb) {
     var result = {
       'status': 'ERROR',
       'message': 'Error connecting',
       'contents': {}
     };
 
-    pg.connect(process.env.DATABASE_URL, 
+    pg.connect("postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj", 
       function(err, client, done) {
       if(err) {
         done();
@@ -35,7 +64,7 @@ addRestaurant: function(req, pg, res, cb) {
       else {
         console.log("Connected to DB, getting schemas...");
         var request = req.body;
-
+        //console.log(request);
         client
           .query("INSERT INTO restaurant VALUES ('" + request.name + "', '" + request.location + "', " + request.qualityrating + ", " + request.pricerating + ", '" + request.foodstyle + "' );")
           .on('end', function() {
@@ -165,6 +194,37 @@ addRestaurant: function(req, pg, res, cb) {
     });
   },
 
+  checkValidLogin: function(req, pg, res, cb) {
+    var results = [];
+
+    pg.connect("postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj", 
+      function(err, client, done) {
+      if(err) {done(); console.log(err);}
+      console.log("Connected to DB, getting schemas...");
+
+      client
+        .query("SELECT * FROM customer WHERE (username='"+req.params.username+"' AND hashedpassword = '" + req.params.password + "');")
+        .on('row', function(row) {
+          results.push(row);
+        })
+        .on('end', function() {
+          done();
+          var result = {
+             'status': 'Cool Beans!',
+             'message': 'accepted',
+             'contents': {}
+             };
+          if(results.length  == 0) {
+            result["status"] = "Not Cool Beans";
+            result["message"] = "rejected";
+          }
+
+          cb(result, res);
+
+        });
+    });
+  },
+
   getCustomerByUN: function(req, pg, res, cb) {
     var results = [];
 
@@ -221,7 +281,7 @@ addRestaurant: function(req, pg, res, cb) {
         })
         .on('end', function() {
           done();
-          cb(results[0], res);
+          cb(results, res);
         });
     });
   },
