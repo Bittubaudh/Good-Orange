@@ -30,12 +30,24 @@ restaurantController.controller('loginCtrl', ['$scope', '$http', '$rootScope',
     }]);
 restaurantController.controller('newuserCtrl', ['$scope', '$http', '$rootScope',
     function($scope, $http, $rootScope) {
-        $http.get('/api/v1/restaurants').success(function(data) {
-            $scope.restaurants = data;
-        });
 
         $scope.orderProp = 'name';
+
+        $scope.createUser = function(){
+            var data = {fullname: $scope.fullname, username: $scope.username, hashedpassowrd: $scope.password, zipcode: $scope.zipcode, 'favoritefoodstyles[]': ["mexican"]};
+            $http.post('/api/v1/customers', JSON.stringify(data)).success(function(){
+                $scope.submitted = "Successfully created user!";
+                $scope.fullname = "";
+                $scope.username = "";
+                $scope.zipcode = "";
+                $scope.password = "";
+
+            });
+
+        };
     }]);
+
+
 restaurantController.controller('addRestaurantCtrl', ['$scope', '$http', '$rootScope',
     function($scope, $http, $rootScope) {
         $http.get('/api/v1/restaurants').success(function(data) {
@@ -98,7 +110,7 @@ restaurantController.controller('restaurantCtrl',  ['$scope', '$http',
             };
 
             //console.log("!!!!!!");
-            console.log(data);
+            //console.log(data);
             $http.post("/api/v1/restaurants", JSON.stringify(data)).success(function(data, status) {
                 $scope.submitted = "Added restaurant!";
             });
@@ -114,25 +126,23 @@ restaurantController.controller('reviewCtrl',  ['$scope', '$http',
         $scope.qualityrating = 0;
         $scope.pricerating = 0;
         $scope.comment = "";
-        $scope.submitted = "Not submitted yet!";
-        console.log("BEFORE POST");
-        console.log("!!!!!!");
-        $scope.sendPost = function() {
+        $scope.submitted = "";
+        $scope.addReview = function() {
             var data = {
                 username: $scope.username,
                 location: $scope.location,
                 comment: $scope.comment,
-                qualityrating: $scope.qualityrating,
-                pricerating: $scope.pricerating,
-                name: $scope.name
+                qualityrating: parseInt($scope.qualityrating),
+                pricerating: parseInt($scope.pricerating),
+                restaurantname: $scope.restaurantname
             };
-
-            console.log("!!!!!!");
-            console.log(data);
-            $.post("/api/v1/reviews", JSON.stringify(data)).success(function(data, status) {
+            $.post("/api/v1/reviews", data).success(function(data, status) {
                 $scope.submitted = "Added review!";
+            }).error(function (data, status, headers, config) {
+                console.log(data);
+                console.log(status);
+                console.log(headers);
             });
-            console.log("AFTER POST");
         }
     }]);
 
@@ -169,6 +179,9 @@ restaurantController.controller('restaurantDetailsCtrl', ['$scope', '$routeParam
             //$scope.task = $filter('filter')(data, {_id: $scope.id})[0];
         });
 
+        $http.get('api/v1/reviews').success(function(data){
+            $scope.reviews = data;
+        })
         $scope.orderProp = 'name';
     }]);
 
@@ -205,4 +218,28 @@ restaurantController.controller('viewUsersCtrl', ['$scope', '$routeParams', '$fi
         });
 
         $scope.orderProp = 'username';
+    }]);
+
+restaurantController.controller('recsCtrl', ['$scope', '$routeParams', '$filter','$http', '$rootScope',
+    function($scope, $routeParams, $filter, $http, $rootScope) {
+        $http.get('/api/v1/customers').success(function(data) {
+            $scope.users = data;
+        });
+
+        $scope.orderProp = 'username';
+        $scope.getRec = function(){
+
+        };
+    }]);
+
+restaurantController.controller('reviewDetailsCtrl', ['$scope', '$routeParams', '$filter','$http', '$rootScope',
+    function($scope, $routeParams, $filter, $http, $rootScope) {
+        $http.get('/api/v1/customers').success(function(data) {
+            $scope.users = data;
+        });
+
+        $scope.orderProp = 'username';
+        $scope.getRec = function(){
+
+        };
     }]);

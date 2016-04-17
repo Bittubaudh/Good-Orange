@@ -1,20 +1,20 @@
-
+<div ng-controller="newuserCtrl">
 <h1>Create an account!</h1>
 
 					<label>Full name
-                        <input type="text" placeholder="Full name">
+                        <input type="text" placeholder="Full name" ng-model="fullname">
                     </label>
                     <label>Username
-                        <input type="text" placeholder="Username">
+                        <input type="text" placeholder="Username" ng-model="username">
                     </label>
                     <label>Password
-                        <input type="password" placeholder="Password">
-                    </label>	
+                        <input type="password" placeholder="Password" ng-model="password">
+                    </label>
                     <label>Zip Code
-                        <input type="text" placeholder="Zip Code">
+                        <input type="text" placeholder="Zip Code" ng-model="zipcode">
                     </label>
                     Choose favorite foodstyle:
-            <select ng-model="orderProp">
+            <select ng-model="favoritefoodstyles">
                         <option value="american">American</option>
                 		<option value="asian">Asian</option>
                 		<option value="italian">Italian</option>
@@ -24,4 +24,6 @@
                 		<option value="pizza">Pizza</option>
                 		<option value="sandwich">Sandwich</option>
             </select>
-                    <button type="submit" class = "button expanded">Send</button>
+                    <button ng-click="createUser()" class = "button">Send</button>
+                {{submitted}}
+</div>

@@ -17,6 +17,10 @@ app.config(['$routeProvider',
         templateUrl: 'partials/reviews.html',
         controller: 'reviewCtrl'
     }).
+    when('/reviews/:username/:location', {
+        templateUrl: 'partials/reviewDetails.html',
+        controller: 'reviewDetailsCtrl'
+    }).
     when('/login', {
         templateUrl: 'partials/login.html',
         controller: 'loginCtrl'
@@ -48,6 +52,10 @@ app.config(['$routeProvider',
     when('/viewUsers/:username', {
         templateUrl: 'partials/userDetails.html',
         controller: 'userDetailsCtrl'
+    }).
+    when('/recs', {
+        templateUrl: 'partials/recs.html',
+        controller: 'recsCtrl'
     }).
     otherwise({
         redirectTo: '/home'

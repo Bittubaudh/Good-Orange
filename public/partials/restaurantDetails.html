@@ -4,3 +4,8 @@
 <h1>Quality Rating:</h1> {{restaurant.qualityrating}}
 <h1>Price Rating:</h1> {{restaurant.pricerating}}
 <h1>Foodstyle:</h1> {{restaurant.foodstyle}}
+<ul>
+<li ng-repeat="review in reviews">
+    <a href="#reviews/{{review.username}}/{{review.location}}">{{review.username}}</a><button ng-click="deleteReview(review)" class="button" style="background-color:red;">Delete Review</button>
+</li>
+    </ul>
