@@ -20,10 +20,10 @@ module.exports = function(app, pg) {
 
   // Customer endpoints
   app.get('/api/v1/customers', function(req, res) {
-      db.getAllCustomers(pg, res, handleResponse);
+    db.getAllCustomers(pg, res, handleResponse);
   });
   app.get('/api/v1/customers/:username', function(req, res) {
-      db.getCustomerByUN(req, pg, res, handleResponse);
+    db.getCustomerByUN(req, pg, res, handleResponse);
   });
   app.post('/api/v1/customers', function(req, res) {
     db.addCustomer(req, pg, res, handleResponse);
@@ -31,10 +31,13 @@ module.exports = function(app, pg) {
 
   // Review endpoints
   app.get('/api/v1/reviews', function(req, res) {
-      db.getAllReviews(pg, res, handleResponse);
+    db.getAllReviews(pg, res, handleResponse);
   });
   app.get('/api/v1/reviews/location/:location', function(req, res) {
-      db.getReviewByLocation(req, pg, res, handleResponse);
+    db.getReviewByLocation(req, pg, res, handleResponse);
+  });
+  app.get('/api/v1/reviews/:username', function(req, res) {
+    db.getReviewByUN(req, pg, res, handleResponse);
   });
   app.post('/api/v1/reviews', function(req, res) {
     db.addReview(req, pg, res, handleResponse);
