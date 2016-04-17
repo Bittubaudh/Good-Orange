@@ -11,7 +11,7 @@ module.exports = function(app, pg) {
   app.post('/api/v1/restaurants', function(req, res) {
   	db.addRestaurant(req, pg, res, handleResponse);
   });
-  app.get('api/v1/restaurants/:location', function(req, res) {
+  app.get('/api/v1/restaurants/:location', function(req, res) {
     db.getRestaurantByLocation(req, pg, res, handleResponse);
   });
   app.delete('/api/v1/restaurants/:location', function(req, res) {
