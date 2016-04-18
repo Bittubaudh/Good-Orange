@@ -34,7 +34,8 @@ module.exports = {
           "rev.qualityrating, rev.pricerating FROM "+
           "restaurant rest INNER JOIN review rev ON "+
           "rest.location=rev.location INNER JOIN "+
-          "customer usr ON rev.username=usr.username;")
+          "customer usr ON rev.username=usr.username WHERE "+
+          "rest.location='"+loc+"';")
         .on('row', function(row) {
           results.push(row);
         })
