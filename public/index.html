@@ -43,15 +43,16 @@
 <a class = "button" href="#/login">Log out</a>
 -->
 
-<a class = "button" href="#/home" ng-hide="user==''">Home</a>
+<!-- <a class = "button" href="#/home" ng-hide="user==''">Home</a> -->
 <a class = "button" href="#/addRestaurant"ng-hide="user==''">Add Restaurant</a>
 <a class = "button" href="#/viewRestaurants"ng-hide="user==''">View Restaurants</a>
 <a class = "button" href="#/viewUsers"ng-hide="user==''">View Users</a>
 <a class = "button" href="#/reviews"ng-hide="user==''">Reviews</a>
 <a class = "button" href="#/search"ng-hide="user==''">Search</a>
-<a class = "button" href="#/deleteRestaurants"ng-hide="user==''">Remove restaurant</a>
+<!-- <a class = "button" href="#/deleteRestaurants"ng-hide="user==''">Remove restaurant</a> -->
 <a class = "button" href="#/login" ng-hide="user!=''">Login</a>
 <a class = "button" href="#/newuser">Create an account</a>
+<a class = "button" href="#/changePassword" ng-hide="user!='admin'">Change password</a>
 <a class = "button" href="#/recs"ng-hide="user==''">Recommendations</a>
 <a class = "button" href="#/login" ng-hide="user==''" ng-click="logout()">Log out</a>
 

@@ -363,7 +363,7 @@ restaurantController.controller('viewUsersCtrl', ['$scope', '$routeParams', '$fi
             var data = $.param({
                 username: user.username,
             });
-            var urlName = "/api/v1/customers/" + user.username;
+            var urlName = "/api/v1/delCustomer/" + user.username;
             $http.delete(urlName).success(function (data, status) {
                 $http.get('/api/v1/customers').success(function (data) {
                     $scope.users = data;
@@ -412,4 +412,31 @@ restaurantController.controller('reviewDetailsCtrl', ['$scope', '$routeParams', 
         $scope.getRec = function(){
 
         };
+    }]);
+
+
+restaurantController.controller('changePasswordCtrl', ['$scope', '$routeParams', '$filter','$http', '$rootScope', '$window',
+    function($scope, $routeParams, $filter, $http, $rootScope, $window) {
+        $scope.user = $window.sessionStorage.user;
+        $rootScope.user = $window.sessionStorage.user;
+        $rootScope.logout = function(){
+            $window.sessionStorage.user = '';
+            $scope.user = $window.sessionStorage.user;
+            $rootScope.user = $window.sessionStorage.user;
+            //console.log('logout');
+        };
+
+        $http.get('/api/v1/customers').success(function(data) {
+            $scope.users = data;
+        });
+
+        $scope.submitted = '';
+
+        $scope.changePassword = function(){
+            var data = {username: $scope.username, password: $scope.newpassword};
+            $http.put('/api/v1/changePass', data).success(function(data) {
+                $scope.submitted = "Password changed successfully!";
+            });
+        };
+
     }]);
