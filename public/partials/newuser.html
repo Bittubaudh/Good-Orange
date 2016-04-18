@@ -14,6 +14,34 @@
                         <input type="text" placeholder="Zip Code" ng-model="zipcode">
                     </label>
                     Choose favorite foodstyles:
+                    <ul style="list-style-type: none;">
+                        <li>
+                            <input type="checkbox" checklist-value="american" ng-model="favoritefoodstyles['american']">American</option>
+                        </li>
+                        <li>
+                		    <input type="checkbox" checklist-value="asian" ng-model="favoritefoodstyles['asian']">Asian</option>
+                        </li>
+                        <li>
+                		    <input type="checkbox" checklist-value="italian" ng-model="favoritefoodstyles['italian']">Italian</option>
+                        </li>
+                        <li>
+                		    <input type="checkbox" checklist-value="meditarranean" ng-model="favoritefoodstyles['meditarranean']">Meditarranean</option>
+                        </li>
+                        <li>
+                		    <input type="checkbox" checklist-value="mexican" ng-model="favoritefoodstyles['mexican']">Mexican</option>
+                        </li>
+                        <li>
+               			    <input type="checkbox" checklist-value="pasta" ng-model="favoritefoodstyles['pasta']">Pasta</option>
+                        </li>
+                        <li>
+                		    <input type="checkbox" checklist-value="pizza" ng-model="favoritefoodstyles['pizza']">Pizza</option>
+                        </li>
+                        <li>
+                		    <input type="checkbox" checklist-value="sandwich" ng-model="favoritefoodstyles['sandwich']">Sandwich</option>
+                        </li>
+                    </ul>
+    <!--
+                        Choose favorite foodstyles:
                         <input type="checkbox" checklist-value="american" ng-model="favoritefoodstyles['american']">American</option>
                 		<input type="checkbox" checklist-value="asian" ng-model="favoritefoodstyles['asian']">Asian</option>
                 		<input type="checkbox" checklist-value="italian" ng-model="favoritefoodstyles['italian']">Italian</option>
@@ -22,7 +50,7 @@
                			<input type="checkbox" checklist-value="pasta" ng-model="favoritefoodstyles['pasta']">Pasta</option>
                 		<input type="checkbox" checklist-value="pizza" ng-model="favoritefoodstyles['pizza']">Pizza</option>
                 		<input type="checkbox" checklist-value="sandwich" ng-model="favoritefoodstyles['sandwich']">Sandwich</option>
-
+-->
                     <button ng-click="createUser()" class = "button">Send</button>
                 {{submitted}}
 </div>
