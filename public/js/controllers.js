@@ -310,7 +310,7 @@ restaurantController.controller('restaurantDetailsCtrl', ['$scope', '$routeParam
         });
 
         $http.get('api/v1/reviews/location/' + $routeParams.location).success(function(data){
-            $scope.reviews = data;
+           // $scope.reviews = data;
         });
 
         $scope.deleteReview = function(review){
@@ -325,6 +325,10 @@ restaurantController.controller('restaurantDetailsCtrl', ['$scope', '$routeParam
                 });
             });
         };
+
+        $http.get('/api/v1/restaurantInfo/' + $routeParams.location).success(function(data){
+            $scope.reviews = data;
+        });
 
         $scope.orderProp = 'name';
     }]);
@@ -376,6 +380,8 @@ restaurantController.controller('viewUsersCtrl', ['$scope', '$routeParams', '$fi
 
 restaurantController.controller('recsCtrl', ['$scope', '$routeParams', '$filter','$http', '$rootScope','$window',
     function($scope, $routeParams, $filter, $http, $rootScope, $window) {
+        $scope.orderProp = 'name';
+
         $scope.user = $window.sessionStorage.user;
         $rootScope.user = $window.sessionStorage.user;
         $rootScope.logout = function(){
@@ -384,12 +390,33 @@ restaurantController.controller('recsCtrl', ['$scope', '$routeParams', '$filter'
             $rootScope.user = $window.sessionStorage.user;
             //console.log('logout');
         };
+        /*
         $http.get('/api/v1/customers').success(function(data) {
             $scope.users = data;
         });
+        $http.get('/api/v1/reviews').success(function(data) {
+            $scope.reviews = data;
+        });
+        $http.get('/api/v1/restaurants').success(function(data) {
+            $scope.restaurants = data;
+        });
 
-        $scope.orderProp = 'username';
+         var reviewsByThisUser = $filter('filter')($scope.reviews, {username: $scope.user});
+
+        */
         $scope.getRec = function(){
+            if($scope.recType=='normal')
+            {
+                $http.get('/recommendations/byHistory/' + $scope.user).success(function(data){
+                    $scope.restaurants = data;
+                });
+            }
+            else //by location
+            {
+                $http.get('/recommendations/byLocation/' + $scope.user).success(function(data){
+                    $scope.restaurants = data;
+                });
+            }
 
         };
     }]);
