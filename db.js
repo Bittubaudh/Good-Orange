@@ -320,15 +320,60 @@ module.exports = {
       client
         .query("SELECT location FROM review WHERE (username='"+un+"');")
         .on('row', function(row) {
-          locationsReviewed.push(row);
+        console.log(row.location);
+        var loc = row.location;
+        client
+          .query("DELETE FROM review WHERE (username='"+un+"' AND location='"+loc+"');")
+          .on('end', function() {
+            results['message'] = "Review for restaurant at "+loc+" by "+un+" SUCCESSFULLY deleted";
+
+            var newAvgPriceRating = 0;
+            var newAvgQualityRating = 0;
+            var rows = [];
+
+          // Update the restaurant's average qualityrating and pricerating
+          client
+            .query("SELECT * FROM review WHERE location='"+loc+"';")
+            .on('row', function(row) {
+              rows.push(row);
+            })
+            .on('end', function() {
+              var totPriceRating = 0.0;
+              var totQualityRating = 0.0;
+              for(var i = 0; i < rows.length; i++) {
+                totPriceRating += rows[i]['pricerating'];
+                totQualityRating += rows[i]['qualityrating'];
+              }
+              if(rows.length <= 0) {
+                newAvgPriceRating = 0;
+                newAvgQualityRating = 0;
+              } else {
+                newAvgPriceRating = Math.round(totPriceRating/rows.length);
+                newAvgQualityRating = Math.round(totQualityRating/rows.length);
+              }
+              var updateQuery = "UPDATE restaurant SET (qualityrating, pricerating) = ("+newAvgQualityRating+", "+
+                newAvgPriceRating+") WHERE location='"+loc+"';";
+
+              client
+              .query(updateQuery)
+              .on('end', function() {
+              });
+            });
+          });
+
         })
         .on('end', function() {
-          done();
-          cb({"message":locationsReviewed}, res);
+          client
+            .query("DELETE FROM customer WHERE username = '" + un + "';")
+            .on('end', function() {
+              done();
+              results.message = "Deleted User and Review";
+              cb(results, res);
+            });
         });
-      
     });
   },
+  
 
   checkValidLogin: function(req, pg, res, cb) {
     var results = [];
