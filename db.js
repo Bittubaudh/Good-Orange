@@ -18,6 +18,34 @@ module.exports = {
     });
   },
 
+  getRestaurantInformationByLocation: function(req, pg, res, cb) {
+
+    var results = [];
+
+    pg.connect("postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj", 
+      function(err, client, done) {
+      if(err) {done(); console.log(err);}
+      console.log("Connected to DB, getting schemas...");
+
+      var loc = req.params.location.replace(/\+/g, " ");
+
+      client
+        .query("SELECT rest.name, usr.fullname, usr.zipcode, rev.comment, "+
+          "rev.qualityrating, rev.pricerating FROM "+
+          "restaurant rest INNER JOIN review rev ON "+
+          "rest.location=rev.location INNER JOIN "+
+          "customer usr ON rev.username=usr.username;")
+        .on('row', function(row) {
+          results.push(row);
+        })
+        .on('end', function() {
+          done();
+          cb(results, res);
+        });
+    });
+    
+  },
+
   checkAndAddRestaurant: function(req, pg, res, cb) {
     var results = [];
     pg.connect("postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj",

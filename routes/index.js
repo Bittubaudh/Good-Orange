@@ -14,6 +14,9 @@ module.exports = function(app, pg) {
   app.get('/api/v1/restaurants/:location', function(req, res) {
     db.getRestaurantByLocation(req, pg, res, handleResponse);
   });
+  app.get('/api/v1/restaurantInfo/:location', function(req, res) {
+    db.getRestaurantInformationByLocation(req, pg, res, handleResponse);
+  });
   app.delete('/api/v1/restaurants/:location', function(req, res) {
     db.deleteRestaurantByLocation(req, pg, res, handleResponse);
   });
