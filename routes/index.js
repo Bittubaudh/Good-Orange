@@ -18,6 +18,10 @@ module.exports = function(app, pg) {
     db.deleteRestaurantByLocation(req, pg, res, handleResponse);
   });
 
+  app.get('/h/:h', function(req, res) {
+    db.sha1test(req, res, handleResponse);
+  });
+
   // Customer endpoints
   app.get('/api/v1/customers', function(req, res) {
     db.getAllCustomers(pg, res, handleResponse);
