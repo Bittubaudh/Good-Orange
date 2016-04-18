@@ -40,6 +40,9 @@ module.exports = function(app, pg) {
   app.get('/api/v1/reviews', function(req, res) {
     db.getAllReviews(pg, res, handleResponse);
   });
+  app.get('/api/v1/reviews/:username/:location', function(req, res) {
+    db.getReviewByLocationAndUN(req, pg, res, handleResponse);
+  });
   app.get('/api/v1/reviews/location/:location', function(req, res) {
     db.getReviewByLocation(req, pg, res, handleResponse);
   });
