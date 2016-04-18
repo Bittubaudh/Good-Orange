@@ -6,7 +6,7 @@
         <div class="col-md-10">
             <ul class="allRestaurants" style="list-style-type: none;">
                     <li ng-repeat="restaurant in restaurants | orderBy: orderProp">
-                        <h3><a href="#viewRestaurants/{{restaurant.location}}">{{restaurant.name}}</a> {{restaurant.location}}<button ng-click="deleteRestaurant()" class="button" style="background-color:red;" ng-hide="user=='admin'">Delete Restaurant</button></h3>
+                        <h3><a href="#viewRestaurants/{{restaurant.location}}">{{restaurant.name}}</a> {{restaurant.location}}<button ng-click="deleteRestaurant(restaurant)" class="button" style="background-color:red;" ng-hide="user!='admin'">Delete Restaurant</button></h3>
                     </li>
             </ul>
 

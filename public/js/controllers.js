@@ -105,16 +105,14 @@ restaurantController.controller('viewRestaurantsCtrl', ['$scope', '$http', '$roo
         });
 
         $scope.orderProp = 'name';
+        /*
         $scope.deleteRestaurant = function(){
             console.log("delete");
-        };
-        /*
+        }; */
         $scope.deleteRestaurant = function(restaurant) {
-            console.log("delete");
             var data = $.param({
                 name: restaurant.name,
                 location: restaurant.location
-
             });
             var urlName = "/api/v1/restaurants/" + restaurant.location;
             $http.delete(urlName).success(function (data, status) {
@@ -122,7 +120,7 @@ restaurantController.controller('viewRestaurantsCtrl', ['$scope', '$http', '$roo
                     $scope.restaurants = data;
                 });
             });
-        };*/
+        };
     }]);
 
 
@@ -220,7 +218,7 @@ restaurantController.controller('restaurantDetailsCtrl', ['$scope', '$routeParam
         });
         $scope.orderProp = 'name';
     }]);
-
+/*
 restaurantController.controller('viewRestaurantsCtrl', ['$scope', '$routeParams', '$filter','$http', '$rootScope',
     function($scope, $routeParams, $filter, $http, $rootScope) {
         $http.get('/api/v1/restaurants').success(function(data) {
@@ -237,6 +235,7 @@ restaurantController.controller('viewRestaurantsCtrl', ['$scope', '$routeParams'
             });
         };
     }]);
+    */
 
 restaurantController.controller('userDetailsCtrl', ['$scope', '$routeParams', '$filter','$http', '$rootScope',
     function($scope, $routeParams, $filter, $http, $rootScope) {
