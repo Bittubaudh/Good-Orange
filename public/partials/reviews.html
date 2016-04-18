@@ -1,13 +1,12 @@
 <div ng-controller="reviewCtrl">
 
 <h1>Submit Reviews</h1>
-<form ng-submit="addReview()">
-					<label>Restaurant Name
-                        <input ng-model="restaurantname" type="text"placeholder="Restaurant Name">
-                    </label>
-                    <label>Location
-                        <input ng-model="location" type="text" placeholder="Location">
-                    </label>
+
+
+    <label> Restaurant Name and location </label>
+    <select ng-model="restaurant">
+        <option ng-repeat="restaurant1 in restaurants | orderBy: orderProp">{{restaurant1.name}} | {{restaurant1.location}}</option>
+    </select>
 			Quality rating
              <select ng-model="qualityrating">
                 <option value="1">1</option>
@@ -37,8 +36,7 @@
 <label>Type your review here...
         <textarea ng-model="comment" rows="10" cols="30"placeholder="Begin typing..."></textarea>
     </label>
-    <button type="submit" class = "button">Send</button>
-    </form>
+    <button ng-click="addReview()" class = "button">Send</button>
 {{submitted}}
 
 </div>

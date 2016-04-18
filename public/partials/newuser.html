@@ -13,17 +13,16 @@
                     <label>Zip Code
                         <input type="text" placeholder="Zip Code" ng-model="zipcode">
                     </label>
-                    Choose favorite foodstyle:
-            <select ng-model="favoritefoodstyles">
-                        <option value="american">American</option>
-                		<option value="asian">Asian</option>
-                		<option value="italian">Italian</option>
-                		<option value="meditarranean">Meditarranean</option>
-                		<option value="mexican">Mexican</option>
-               			<option value="pasta">Pasta</option>
-                		<option value="pizza">Pizza</option>
-                		<option value="sandwich">Sandwich</option>
-            </select>
+                    Choose favorite foodstyles:
+                        <input type="checkbox" checklist-value="american" ng-model="favoritefoodstyles['american']">American</option>
+                		<input type="checkbox" checklist-value="asian" ng-model="favoritefoodstyles['asian']">Asian</option>
+                		<input type="checkbox" checklist-value="italian" ng-model="favoritefoodstyles['italian']">Italian</option>
+                		<input type="checkbox" checklist-value="meditarranean" ng-model="favoritefoodstyles['meditarranean']">Meditarranean</option>
+                		<input type="checkbox" checklist-value="mexican" ng-model="favoritefoodstyles['mexican']">Mexican</option>
+               			<input type="checkbox" checklist-value="pasta" ng-model="favoritefoodstyles['pasta']">Pasta</option>
+                		<input type="checkbox" checklist-value="pizza" ng-model="favoritefoodstyles['pizza']">Pizza</option>
+                		<input type="checkbox" checklist-value="sandwich" ng-model="favoritefoodstyles['sandwich']">Sandwich</option>
+
                     <button ng-click="createUser()" class = "button">Send</button>
                 {{submitted}}
 </div>
