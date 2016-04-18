@@ -4,6 +4,13 @@ var restaurantController = angular.module('restaurantController', []);
 restaurantController.controller('homeCtrl', ['$scope', '$http', '$rootScope', '$window',
     function($scope, $http, $rootScope, $window) {
         $scope.user = $window.sessionStorage.user;
+        $rootScope.user = $window.sessionStorage.user;
+        $rootScope.logout = function(){
+            $window.sessionStorage.user = '';
+            $scope.user = $window.sessionStorage.user;
+            $rootScope.user = $window.sessionStorage.user;
+            //console.log('logout');
+        };
         $http.get('/api/v1/restaurants').success(function(data) {
             $scope.restaurants = data;
         });
@@ -15,6 +22,13 @@ restaurantController.controller('homeCtrl', ['$scope', '$http', '$rootScope', '$
 restaurantController.controller('searchCtrl', ['$scope', '$http', '$rootScope','$window',
     function($scope, $http, $rootScope, $window) {
         $scope.user = $window.sessionStorage.user;
+        $rootScope.user = $window.sessionStorage.user;
+        $rootScope.logout = function(){
+            $window.sessionStorage.user = '';
+            $scope.user = $window.sessionStorage.user;
+            $rootScope.user = $window.sessionStorage.user;
+            //console.log('logout');
+        };
         $http.get('/api/v1/restaurants').success(function(data) {
             $scope.restaurants = data;
         });
@@ -27,23 +41,31 @@ restaurantController.controller('loginCtrl', ['$scope', '$http', '$rootScope', '
         $http.get('/api/v1/restaurants').success(function(data) {
             $scope.restaurants = data;
         });
-        $window.sessionStorage.user = "";
+        $scope.user = $window.sessionStorage.user;
+        $rootScope.user = $window.sessionStorage.user;
+        $rootScope.logout = function(){
+            $window.sessionStorage.user = '';
+            $scope.user = $window.sessionStorage.user;
+            $rootScope.user = $window.sessionStorage.user;
+            //console.log('logout');
+        };
         $scope.submitted = '';
 
         $scope.logIn = function(){
-            console.log('login');
             $http.get('/api/v1/customers/' + $scope.username + '/' + $scope.password).success(function(data){
-                console.log(data.message);
+                //console.log(data.message);
                 if(data.message === 'accepted')
                 {
                     $window.sessionStorage.user = $scope.username;
                     $scope.user = $window.sessionStorage.user;
+                    $rootScope.user = $window.sessionStorage.user;
                     $scope.submitted = "Successfully logged in!";
                 }
                 else //data == 'rejected'
                 {
                     $window.sessionStorage.user = "";
                     $scope.user = $window.sessionStorage.user;
+                    $rootScope.user = $window.sessionStorage.user;
                     $scope.submitted = "Invalid username or password. Please try again.";
                 }
 
@@ -57,6 +79,13 @@ restaurantController.controller('newuserCtrl', ['$scope', '$http', '$rootScope',
     function($scope, $http, $rootScope, $window) {
         //$scope.favoritefoodstyles = {};
         $scope.user = $window.sessionStorage.user;
+        $rootScope.user = $window.sessionStorage.user;
+        $rootScope.logout = function(){
+            $window.sessionStorage.user = '';
+            $scope.user = $window.sessionStorage.user;
+            $rootScope.user = $window.sessionStorage.user;
+            //console.log('logout');
+        };
         $scope.orderProp = 'name';
         $scope.createUser = function(){
             $scope.selectedValues = [];
@@ -84,6 +113,13 @@ restaurantController.controller('addRestaurantCtrl', ['$scope', '$http', '$rootS
             $scope.restaurants = data;
         });
         $scope.user = $window.sessionStorage.user;
+        $rootScope.user = $window.sessionStorage.user;
+        $rootScope.logout = function(){
+            $window.sessionStorage.user = '';
+            $scope.user = $window.sessionStorage.user;
+            $rootScope.user = $window.sessionStorage.user;
+            //console.log('logout');
+        };
 
         $scope.name = "";
         $scope.location = "";
@@ -118,6 +154,13 @@ restaurantController.controller('viewRestaurantsCtrl', ['$scope', '$http', '$roo
             $scope.restaurants = data;
         });
         $scope.user = $window.sessionStorage.user;
+        $rootScope.user = $window.sessionStorage.user;
+        $rootScope.logout = function(){
+            $window.sessionStorage.user = '';
+            $scope.user = $window.sessionStorage.user;
+            $rootScope.user = $window.sessionStorage.user;
+            //console.log('logout');
+        };
 
         $scope.orderProp = 'name';
         /*
@@ -172,6 +215,13 @@ restaurantController.controller('reviewCtrl',  ['$scope', '$http','$rootScope', 
             $scope.restaurants = data;
         });
         $scope.user = $window.sessionStorage.user;
+        $rootScope.user = $window.sessionStorage.user;
+        $rootScope.logout = function(){
+            $window.sessionStorage.user = '';
+            $scope.user = $window.sessionStorage.user;
+            $rootScope.user = $window.sessionStorage.user;
+            //console.log('logout');
+        };
 
         $scope.orderProp = 'name';
 
@@ -211,6 +261,13 @@ restaurantController.controller('reviewCtrl',  ['$scope', '$http','$rootScope', 
 restaurantController.controller('deleteRestaurantsCtrl', ['$scope', '$http','$rootScope', '$window',
     function($scope, $http, $rootScope, $window) {
         $scope.user = $window.sessionStorage.user;
+        $rootScope.user = $window.sessionStorage.user;
+        $rootScope.logout = function(){
+            $window.sessionStorage.user = '';
+            $scope.user = $window.sessionStorage.user;
+            $rootScope.user = $window.sessionStorage.user;
+            //console.log('logout');
+        };
 
         $http.get('/api/v1/restaurants').success(function(data) {
             $scope.restaurants = data;
@@ -240,6 +297,13 @@ $http.delete(urlName).success(function(data, status){
 restaurantController.controller('restaurantDetailsCtrl', ['$scope', '$routeParams', '$filter','$http', '$rootScope', '$window',
     function($scope, $routeParams, $filter, $http, $rootScope, $window) {
         $scope.user = $window.sessionStorage.user;
+        $rootScope.user = $window.sessionStorage.user;
+        $rootScope.logout = function(){
+            $window.sessionStorage.user = '';
+            $scope.user = $window.sessionStorage.user;
+            $rootScope.user = $window.sessionStorage.user;
+            //console.log('logout');
+        };
         $http.get('/api/v1/restaurants/' + $routeParams.location).success(function(data) {
             $scope.restaurant = data;
             //$scope.task = $filter('filter')(data, {_id: $scope.id})[0];
@@ -268,6 +332,13 @@ restaurantController.controller('restaurantDetailsCtrl', ['$scope', '$routeParam
 restaurantController.controller('userDetailsCtrl', ['$scope', '$routeParams', '$filter','$http', '$rootScope', '$window',
     function($scope, $routeParams, $filter, $http, $rootScope, $window) {
         $scope.user = $window.sessionStorage.user;
+        $rootScope.user = $window.sessionStorage.user;
+        $rootScope.logout = function(){
+            $window.sessionStorage.user = '';
+            $scope.user = $window.sessionStorage.user;
+            $rootScope.user = $window.sessionStorage.user;
+            //console.log('logout');
+        };
         $http.get('/api/v1/customers/' + $routeParams.username).success(function(data) {
             $scope.user = data;
         });
@@ -278,6 +349,13 @@ restaurantController.controller('userDetailsCtrl', ['$scope', '$routeParams', '$
 restaurantController.controller('viewUsersCtrl', ['$scope', '$routeParams', '$filter','$http', '$rootScope', '$window',
     function($scope, $routeParams, $filter, $http, $rootScope, $window) {
         $scope.user = $window.sessionStorage.user;
+        $rootScope.user = $window.sessionStorage.user;
+        $rootScope.logout = function(){
+            $window.sessionStorage.user = '';
+            $scope.user = $window.sessionStorage.user;
+            $rootScope.user = $window.sessionStorage.user;
+            //console.log('logout');
+        };
         $http.get('/api/v1/customers').success(function(data) {
             $scope.users = data;
         });
@@ -299,6 +377,13 @@ restaurantController.controller('viewUsersCtrl', ['$scope', '$routeParams', '$fi
 restaurantController.controller('recsCtrl', ['$scope', '$routeParams', '$filter','$http', '$rootScope','$window',
     function($scope, $routeParams, $filter, $http, $rootScope, $window) {
         $scope.user = $window.sessionStorage.user;
+        $rootScope.user = $window.sessionStorage.user;
+        $rootScope.logout = function(){
+            $window.sessionStorage.user = '';
+            $scope.user = $window.sessionStorage.user;
+            $rootScope.user = $window.sessionStorage.user;
+            //console.log('logout');
+        };
         $http.get('/api/v1/customers').success(function(data) {
             $scope.users = data;
         });
@@ -312,6 +397,13 @@ restaurantController.controller('recsCtrl', ['$scope', '$routeParams', '$filter'
 restaurantController.controller('reviewDetailsCtrl', ['$scope', '$routeParams', '$filter','$http', '$rootScope', '$window',
     function($scope, $routeParams, $filter, $http, $rootScope, $window) {
         $scope.user = $window.sessionStorage.user;
+        $rootScope.user = $window.sessionStorage.user;
+        $rootScope.logout = function(){
+            $window.sessionStorage.user = '';
+            $scope.user = $window.sessionStorage.user;
+            $rootScope.user = $window.sessionStorage.user;
+            //console.log('logout');
+        };
 
         $http.get('/api/v1/reviews/locUN/' + $routeParams.username + '/' + $routeParams.location).success(function(data){
             $scope.review = data;

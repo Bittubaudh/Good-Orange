@@ -2,13 +2,26 @@
 <div  ng-controller="viewRestaurantsCtrl">
 <h1>View all restaurants </h1>
 
-
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Location</th>
+            <th ng-hide="user!='admin'">Delete Restaurant</th>
+        </tr>
+        <tr ng-repeat="restaurant in restaurants | orderBy: orderProp">
+            <td><a href="#viewRestaurants/{{restaurant.location}}">{{restaurant.name}}</a></td>
+            <td>{{restaurant.location}}</td>
+            <td ng-hide="user!='admin'"><button ng-click="deleteRestaurant(restaurant)" class="button" style="background-color:red;" ng-hide="user!='admin'">Delete Restaurant</button></td>
+        </tr>
+    </table>
+<!--
         <div class="col-md-10">
             <ul class="allRestaurants" style="list-style-type: none;">
                     <li ng-repeat="restaurant in restaurants | orderBy: orderProp">
-                        <h3><a href="#viewRestaurants/{{restaurant.location}}">{{restaurant.name}}</a> {{restaurant.location}}<button ng-click="deleteRestaurant(restaurant)" class="button" style="background-color:red;" ng-hide="user=='admin'">Delete Restaurant</button></h3>
+                        <h3><a href="#viewRestaurants/{{restaurant.location}}">{{restaurant.name}}</a> {{restaurant.location}}<button ng-click="deleteRestaurant(restaurant)" class="button" style="background-color:red;" ng-hide="user!='admin'">Delete Restaurant</button></h3>
                     </li>
             </ul>
 
         </div>
+        -->
 </div>
