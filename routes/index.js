@@ -34,6 +34,9 @@ module.exports = function(app, pg) {
   app.get('/api/v1/customers/:username/:password', function(req, res) {
     db.checkValidLogin(req, pg, res, handleResponse);
   });
+  app.put('/api/v1/changePass', function(req, res) {
+    db.updatePassword(req, pg, res, handleResponse);
+  });
 
   // Review endpoints
   app.get('/api/v1/reviews', function(req, res) {

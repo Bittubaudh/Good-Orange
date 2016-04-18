@@ -77,6 +77,61 @@ module.exports = {
       }
     });
   },
+    
+  updatePassword: function(req, pg, res, cb) {
+    var result = {
+      'status': 'ERROR',
+      'message': 'Error connecting',
+      'contents': {}
+    };
+    var msg = req.body.password;
+    function rotl(n,s) { return n<<s|n>>>32-s; };
+    function tohex(i) { for(var h="", s=28;;s-=4) { h+=(i>>>s&0xf).toString(16); if(!s) return h; } };
+    var H0=0x67452301, H1=0xEFCDAB89, H2=0x98BADCFE, H3=0x10325476, H4=0xC3D2E1F0, M=0x0ffffffff; 
+    var i, t, W=new Array(80), ml=msg.length, wa=new Array();
+    msg += String.fromCharCode(0x80);
+    while(msg.length%4) msg+=String.fromCharCode(0);
+    for(i=0;i<msg.length;i+=4) wa.push(msg.charCodeAt(i)<<24|msg.charCodeAt(i+1)<<16|msg.charCodeAt(i+2)<<8|msg.charCodeAt(i+3));
+    while(wa.length%16!=14) wa.push(0);
+    wa.push(ml>>>29),wa.push((ml<<3)&M);
+    for( var bo=0;bo<wa.length;bo+=16 ) {
+      for(i=0;i<16;i++) W[i]=wa[bo+i];
+      for(i=16;i<=79;i++) W[i]=rotl(W[i-3]^W[i-8]^W[i-14]^W[i-16],1);
+      var A=H0, B=H1, C=H2, D=H3, E=H4;
+      for(i=0 ;i<=19;i++) t=(rotl(A,5)+(B&C|~B&D)+E+W[i]+0x5A827999)&M, E=D, D=C, C=rotl(B,30), B=A, A=t;
+      for(i=20;i<=39;i++) t=(rotl(A,5)+(B^C^D)+E+W[i]+0x6ED9EBA1)&M, E=D, D=C, C=rotl(B,30), B=A, A=t;
+      for(i=40;i<=59;i++) t=(rotl(A,5)+(B&C|B&D|C&D)+E+W[i]+0x8F1BBCDC)&M, E=D, D=C, C=rotl(B,30), B=A, A=t;
+      for(i=60;i<=79;i++) t=(rotl(A,5)+(B^C^D)+E+W[i]+0xCA62C1D6)&M, E=D, D=C, C=rotl(B,30), B=A, A=t;
+      H0=H0+A&M;H1=H1+B&M;H2=H2+C&M;H3=H3+D&M;H4=H4+E&M;
+    }
+    var hashedpassword = tohex(H0)+tohex(H1)+tohex(H2)+tohex(H3)+tohex(H4);
+
+
+
+
+    pg.connect("postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj", 
+      function(err, client, done) {
+      if(err) {
+        done();
+        result['contents'] = {'errorMSG': err};
+        cb(result, res);
+      }
+      else {
+        console.log("Connected to DB, getting schemas...");
+        var request = req.body;
+        //console.log(request);
+        client
+          .query("UPDATE CUSTOMER SET hashedpassword = '" + hashedpassword + "' WHERE username = '" + req.body.username + "';")
+          .on('end', function() {
+            done();
+            result['status'] = 'SUCCESS';
+            result['message'] = 'Password Successfully Changed';
+            result['contents'] = request;
+            cb(result, res);
+          });
+      }
+    });
+  },
 
   //need to test
   getRestaurantByLocation: function(req, pg, res, cb) {
@@ -147,6 +202,8 @@ module.exports = {
         });
     });
   },
+
+
 
   addCustomer: function(req, pg, res, cb) {
     var result = {
