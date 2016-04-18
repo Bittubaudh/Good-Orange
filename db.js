@@ -28,6 +28,7 @@ module.exports = {
       console.log("Connected to DB, getting schemas...");
 
       var loc = req.params.location.replace(/\+/g, " ");
+      loc = loc.replace(/\'/g, "\'\'");
 
       client
         .query("SELECT rest.name, rest.location, usr.fullname, usr.username, usr.zipcode, "+
@@ -64,6 +65,9 @@ module.exports = {
       else {
         console.log("Connected to DB, getting schemas...");
         var request = req.body;
+        request.name = request.name.replace(/\'/g, "\'\'");
+        request.location = request.location.replace(/\'/g, "\'\'");
+
         //console.log(request);
         client
           .query("INSERT INTO restaurant VALUES ('" + request.name + "', '" + request.location + "', " + request.qualityrating + ", " + request.pricerating + ", '" + request.foodstyle + "' );")
@@ -143,7 +147,7 @@ module.exports = {
       console.log("Connected to DB, getting schemas...");
       
       var loc = req.params.location.replace(/\+/g, " ");
-      console.log(req.params.location);
+      loc = loc.replace(/\'/g, "\'\'");
 
       client
         .query("SELECT * FROM restaurant WHERE location='"+req.params.location+"';")
@@ -164,6 +168,7 @@ module.exports = {
       console.log("Connected to DB, getting schemas...");
 
       var loc = req.params.location.replace(/\+/g, " ");
+      loc = loc.replace(/\'/g, "\'\'");
 
       var results = {"message": "Restaurant at "+loc+" NOT deleted"};
 
@@ -470,6 +475,7 @@ module.exports = {
       console.log("Connected to DB, getting schemas...");
 
       var loc = req.params.location.replace(/\+/g, " ");
+      loc = loc.replace(/\'/g, "\'\'");
 
       client
         .query("SELECT * FROM review WHERE location='"+loc+"';")
@@ -500,6 +506,9 @@ module.exports = {
       else {
         console.log("Connected to DB, getting schemas...");
         var request = req.body;
+        request.comment = request.comment.replace(/\'/g, "\'\'");
+        request.restaurantname = request.restaurantname.replace(/\'/g, "\'\'");
+        request.location = request.location.replace(/\'/g, "\'\'");
 
         // Insert new review
         client
@@ -577,6 +586,7 @@ module.exports = {
 
       var un = req.params.username;
       var loc = req.params.location.replace(/\+/g, " ");
+      loc = loc.replace(/\'/g, "\'\'");
 
       var results = {"message": "Review for restaurant at "+loc+" by "+un+" NOT deleted"};
 
