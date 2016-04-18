@@ -4,6 +4,7 @@ module.exports = function(app, pg) {
   }
 
   var db = require('../db');
+  var adv = require('../adv');
   // Restaurant endpoints
   app.get('/api/v1/restaurants', function(req, res) {
       db.getAllRestaurants(pg, res, handleResponse);
@@ -59,5 +60,13 @@ module.exports = function(app, pg) {
   });
   app.delete('/api/v1/reviews/:username/:location', function(req, res) {
     db.deleteReviewByUNandLocation(req, pg, res, handleResponse);
+  });
+
+  // Advanced endpoints
+  app.get('/recommendations/byHistory/:username', function(req, res) {
+    adv.getRecommendationsByHistory(req, pg, res, handleResponse);
+  });
+  app.get('/recommendations/byLocation/:username', function(req, res) {
+    adv.getRecommendationsByLocation(req, pg, res, handleResponse);
   });
 }
