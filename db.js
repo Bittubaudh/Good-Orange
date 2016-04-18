@@ -220,6 +220,30 @@ module.exports = {
     });
   },
 
+  deleteCustomerByUN: function(req, pg, res, cb) {
+    pg.connect("postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj", 
+      function(err, client, done) {
+      if(err) {done(); console.log(err);}
+      console.log("Connected to DB, getting schemas...");
+
+      var un = req.params.username;
+
+      var results = {"message": "User "+un+" NOT deleted"};
+
+      var locationsReviewed = [];
+      client
+        .query("SELECT location FROM review WHERE (username='"+un+"');")
+        .on('row', function(row) {
+          locationsReviewed.push(row);
+        })
+        .on('end', function() {
+          done();
+          cb({"message":locationsReviewed}, res);
+        });
+      
+    });
+  },
+
   checkValidLogin: function(req, pg, res, cb) {
     var results = [];
 
@@ -330,7 +354,7 @@ module.exports = {
         })
         .on('end', function() {
           done();
-          cb(results, res);
+          cb(results[0], res);
         });
     });
   },
@@ -344,7 +368,7 @@ module.exports = {
       console.log("Connected to DB, getting schemas...");
 
       var loc = req.params.location.replace(/\+/g, " ");
-      
+
       client
         .query("SELECT * FROM review WHERE location='"+loc+"';")
         .on('row', function(row) {
@@ -476,10 +500,13 @@ module.exports = {
                 totPriceRating += rows[i]['pricerating'];
                 totQualityRating += rows[i]['qualityrating'];
               }
-
-              newAvgPriceRating = Math.round(totPriceRating/rows.length);
-              newAvgQualityRating = Math.round(totQualityRating/rows.length);
-
+              if(rows.length <= 0) {
+                newAvgPriceRating = 0;
+                newAvgQualityRating = 0;
+              } else {
+                newAvgPriceRating = Math.round(totPriceRating/rows.length);
+                newAvgQualityRating = Math.round(totQualityRating/rows.length);
+              }
               var updateQuery = "UPDATE restaurant SET (qualityrating, pricerating) = ("+newAvgQualityRating+", "+
                 newAvgPriceRating+") WHERE location='"+loc+"';";
 

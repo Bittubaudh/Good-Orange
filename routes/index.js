@@ -28,6 +28,9 @@ module.exports = function(app, pg) {
   app.post('/api/v1/customers', function(req, res) {
     db.addCustomer(req, pg, res, handleResponse);
   });
+  app.delete('/api/v1/delCustomer/:username', function(req, res) {
+    db.deleteCustomerByUN(req, pg, res, handleResponse);
+  });
   app.get('/api/v1/customers/:username/:password', function(req, res) {
     db.checkValidLogin(req, pg, res, handleResponse);
   });
