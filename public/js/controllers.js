@@ -218,24 +218,6 @@ restaurantController.controller('restaurantDetailsCtrl', ['$scope', '$routeParam
         });
         $scope.orderProp = 'name';
     }]);
-/*
-restaurantController.controller('viewRestaurantsCtrl', ['$scope', '$routeParams', '$filter','$http', '$rootScope',
-    function($scope, $routeParams, $filter, $http, $rootScope) {
-        $http.get('/api/v1/restaurants').success(function(data) {
-            $scope.restaurants = data;
-        });
-
-        $scope.orderProp = 'name';
-        $scope.deleteRestaurant = function(location){
-            var urlName = "/api/v1/restaurants/" + location;
-            $http.delete(urlName).success(function(data, status){
-            });
-            $http.get('/api/v1/restaurants').success(function(data) {
-                $scope.restaurants = data;
-            });
-        };
-    }]);
-    */
 
 restaurantController.controller('userDetailsCtrl', ['$scope', '$routeParams', '$filter','$http', '$rootScope',
     function($scope, $routeParams, $filter, $http, $rootScope) {
@@ -251,6 +233,17 @@ restaurantController.controller('viewUsersCtrl', ['$scope', '$routeParams', '$fi
         $http.get('/api/v1/customers').success(function(data) {
             $scope.users = data;
         });
+        $scope.deleteUser = function(user) {
+            var data = $.param({
+                username: user.username,
+            });
+            var urlName = "/api/v1/customers/" + user.username;
+            $http.delete(urlName).success(function (data, status) {
+                $http.get('/api/v1/customers').success(function (data) {
+                    $scope.users = data;
+                });
+            });
+        };
 
         $scope.orderProp = 'username';
     }]);
@@ -269,11 +262,11 @@ restaurantController.controller('recsCtrl', ['$scope', '$routeParams', '$filter'
 
 restaurantController.controller('reviewDetailsCtrl', ['$scope', '$routeParams', '$filter','$http', '$rootScope',
     function($scope, $routeParams, $filter, $http, $rootScope) {
-        $http.get('/api/v1/customers').success(function(data) {
-            $scope.users = data;
+
+        $http.get('api/v1/reviews/' + $routeParams.username + '/' + $routeParams.location).success(function(data){
+            $scope.review = data;
         });
 
-        $scope.orderProp = 'username';
         $scope.getRec = function(){
 
         };
