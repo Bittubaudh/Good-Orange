@@ -18,10 +18,6 @@ module.exports = function(app, pg) {
     db.deleteRestaurantByLocation(req, pg, res, handleResponse);
   });
 
-  app.get('/h/:h', function(req, res) {
-    db.sha1test(req, res, handleResponse);
-  });
-
   // Customer endpoints
   app.get('/api/v1/customers', function(req, res) {
     db.getAllCustomers(pg, res, handleResponse);
@@ -40,7 +36,7 @@ module.exports = function(app, pg) {
   app.get('/api/v1/reviews', function(req, res) {
     db.getAllReviews(pg, res, handleResponse);
   });
-  app.get('/api/v1/reviews/:username/:location', function(req, res) {
+  app.get('/api/v1/reviews/locUN/:username/:location', function(req, res) {
     db.getReviewByLocationAndUN(req, pg, res, handleResponse);
   });
   app.get('/api/v1/reviews/location/:location', function(req, res) {

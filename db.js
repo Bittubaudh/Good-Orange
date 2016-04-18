@@ -344,7 +344,7 @@ module.exports = {
       console.log("Connected to DB, getting schemas...");
 
       var loc = req.params.location.replace(/\+/g, " ");
-
+      
       client
         .query("SELECT * FROM review WHERE location='"+loc+"';")
         .on('row', function(row) {
