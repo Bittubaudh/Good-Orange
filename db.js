@@ -267,8 +267,6 @@ module.exports = {
 
         queryString += insertArrayStr + ');';
 
-        console.log(queryString);
-
         client
           .query(queryString)
           .on('end', function() {
