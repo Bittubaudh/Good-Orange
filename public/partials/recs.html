@@ -1,9 +1,85 @@
-<div  ng-controller="recsCtrl">
+<div ng-controller="recCtrl">
+
+<h1>{{error}}</h1>
+
 <select ng-model="recType"\>
     <option value="normal">Normal</option>
     <option value="location">By location</option>
 </select><br>
-<button ng-click="getRec()" class = "button">Get recommendation</button>
+
+
+<div ng-hide='recType=="normal"'>
+
+<select ng-model="locType"\>
+    <option value="user">Search by User Location</option>
+    <option value="predef">Search by User Inputted Address</option>
+</select>
+
+<div ng-hide='locType=="predef"'>
+    <p>Get your user location for better results. Default: based on user-saved Zipcode.</p>
+    <button ng-click="getLocation()">Get User Location</button>
+    {{locationInfo}}
+</div>
+
+</div ng-hide='locType=="user"'>
+    <p>Find recommendations on selected address. <b>(Leave these blank if you are using user location!)</b></p>
+    <label>Address <input ng-model="address" type="text" placeholder="Example: 303 S 5th St"></label>
+    <label>City <input ng-model="city" type="text" placeholder="Example: Champaign"></label>
+    <label>State <input ng-model="state" type="text" placeholder="Example: IL or Illinois"> </label>
+    <label>Zipcode <input ng-model="zipcode" type="text" placeholder="Example: 61820"></label>
+</div>
+
+    <p>More details</p>
+    Distance (optional - default 2 miles)<select ng-model="distance">
+        <option value="1609">1 Mile</option>
+        <option value="3219">2 Miles</option>
+        <option value="8047">5 Miles</option>
+        <option value="16093">10 Miles</option>
+        <option value="32187">20 Miles</option>
+    </select>
+
+    Minimum Price Rating (optional - default no minimum)<select ng-model="minPrice">
+        <option value="0">No minimum</option>
+        <option value="1">$</option>
+        <option value="2">$$</option>
+        <option value="3">$$$</option>
+        <option value="4">$$$$</option>
+    </select>
+
+    Maximum Price Rating (optional - default no maximum)<select ng-model="maxPrice">
+        <option value="1">$</option>
+        <option value="2">$$</option>
+        <option value="3">$$$</option>
+        <option value="4">$$$$</option>
+        <option value="4">No maximum</option>
+    </select>
+
+    Open Now? (optional - default no specification)<select ng-model="openNow">
+        <option value="true">Filter and show open restaurants</option>
+        <option value="false">Do not filter</option>
+    </select>
+
+    Food Style (optional - default no specification)<select ng-model="foodStyle">
+        <option value="american">American</option>
+        <option value="asian">Asian</option>
+        <option value="italian">Italian</option>
+        <option value="meditarranean">Meditarranean</option>
+        <option value="mexican">Mexican</option>
+        <option value="pasta">Pasta</option>
+        <option value="pizza">Pizza</option>
+        <option value="sandwich">Sandwich</option>
+        <option value="any">Any</option>
+    </select>
+
+    Rank By: (optional)<select ng-model="rankBy">
+        <option value="google.maps.places.RankBy.DISTANCE">The closer the better!</option>
+        <option value="google.maps.places.RankBy.PROMINENCE">Show me the best choices!</option>
+    </select>
+</div>
+    <button class="button expanded" ng-click="getRec()">Give Me My Recommendations!</button>
+
+<div id="locResults"></div>
+
 
 <h1>Recommended Restaurants</h1>
 <table>
@@ -16,4 +92,5 @@
         <td>{{restaurant.location}}</td>
     </tr>
 </table>
-    </div>
+
+</div>
