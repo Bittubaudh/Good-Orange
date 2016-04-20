@@ -5,13 +5,16 @@
 </div>
 <div class="col-md-10">
     <!--Body content-->
-
+    Search: <input ng-model="query">
+    <br>
+    <br>
+    <br>
     <table>
         <tr>
             <th>Username</th>
             <th ng-hide="user!='admin'">Delete User</th>
         </tr>
-        <tr ng-repeat="user1 in users | orderBy: orderProp">
+        <tr ng-repeat="user1 in users | orderBy: orderProp | filter:query">
             <td><a href="#viewUsers/{{user1.username}}">{{user1.username}}</a></td>
             <td ng-hide="user!='admin'"><button ng-click="deleteUser(user1)" class="button" style="background-color:red;" ng-hide="user!='admin'">Delete User</button></td>
         </tr>

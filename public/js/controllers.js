@@ -41,6 +41,7 @@ restaurantController.controller('loginCtrl', ['$scope', '$http', '$rootScope', '
         $http.get('/api/v1/restaurants').success(function(data) {
             $scope.restaurants = data;
         });
+        $window.sessionStorage.user = '';
         $scope.user = $window.sessionStorage.user;
         $rootScope.user = $window.sessionStorage.user;
         $rootScope.logout = function(){
@@ -346,6 +347,10 @@ restaurantController.controller('userDetailsCtrl', ['$scope', '$routeParams', '$
         $http.get('/api/v1/customers/' + $routeParams.username).success(function(data) {
             $scope.user = data;
         });
+        $http.get('/api/v1/reviews/' + $routeParams.username).success(function(data) {
+            $scope.reviews = data;
+        });
+
 
         $scope.orderProp = 'name';
     }]);
@@ -404,13 +409,11 @@ restaurantController.controller('recsCtrl', ['$scope', '$routeParams', '$filter'
          var reviewsByThisUser = $filter('filter')($scope.reviews, {username: $scope.user});
 
         */
-        $scope.getRec = function(){ console.log("getRec");
+        $scope.getRec = function(){
             if($scope.recType=='normal')
             {
-
                 $http.get('/recommendations/byHistory/' + $scope.user).success(function(data){
                     $scope.restaurants = data;
-                    console.log("data: " + data);
                 });
             }
             else //by location

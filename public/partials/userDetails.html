@@ -7,3 +7,13 @@ Zipcode: {{user.zipcode}}
         <h3>{{fav}}</h3>
     </li>
 </ul>
+
+<h1> Reviews by {{user.username}}</h1>
+<table>
+    <tr>
+        <th>Restaurant Name</th>
+    </tr>
+    <tr ng-repeat="review in reviews">
+        <td><a href="#reviews/{{review.username}}/{{review.location}}">{{review.restaurantname}}</a></td>
+    </tr>
+</table>
