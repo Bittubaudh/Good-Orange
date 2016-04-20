@@ -437,7 +437,7 @@ module.exports = {
         })
         .on('end', function() {
           done();
-          cb(results[0], res);
+          cb(results, res);
         });
     });
   },

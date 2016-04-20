@@ -404,11 +404,13 @@ restaurantController.controller('recsCtrl', ['$scope', '$routeParams', '$filter'
          var reviewsByThisUser = $filter('filter')($scope.reviews, {username: $scope.user});
 
         */
-        $scope.getRec = function(){
+        $scope.getRec = function(){ console.log("getRec");
             if($scope.recType=='normal')
             {
+
                 $http.get('/recommendations/byHistory/' + $scope.user).success(function(data){
                     $scope.restaurants = data;
+                    console.log("data: " + data);
                 });
             }
             else //by location
