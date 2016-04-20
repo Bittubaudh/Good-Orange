@@ -29,6 +29,7 @@
 </head>
 
 <body>
+<!--
 <a class = "button" href="#/home">Home</a>
 <a class = "button" href="#/addRestaurant">Add Restaurant</a>
 <a class = "button" href="#/viewRestaurants">View Restaurants</a>
@@ -39,6 +40,23 @@
 <a class = "button" href="#/login">Login</a>
 <a class = "button" href="#/newuser">Create an account</a>
 <a class = "button" href="#/recs">Recommendations</a>
+<a class = "button" href="#/login">Log out</a>
+-->
+
+<!-- <a class = "button" href="#/home" ng-hide="user==''">Home</a> -->
+<a class = "button" href="#/addRestaurant"ng-hide="user==''">Add Restaurant</a>
+<a class = "button" href="#/viewRestaurants"ng-hide="user==''">View Restaurants</a>
+<a class = "button" href="#/viewUsers"ng-hide="user==''">View Users</a>
+<a class = "button" href="#viewUsers/{{user}}"ng-hide="user==''">Profile</a>
+<a class = "button" href="#/reviews"ng-hide="user==''">Submit Review</a>
+<!-- <a class = "button" href="#/search"ng-hide="user==''">Search</a> -->
+<!-- <a class = "button" href="#/deleteRestaurants"ng-hide="user==''">Remove restaurant</a> -->
+<a class = "button" href="#/login" ng-hide="user!=''">Login</a>
+<a class = "button" href="#/newuser" ng-show="user=='admin' || user==''"> Create an account</a>
+<a class = "button" href="#/changePassword" ng-hide="user!='admin'">Change password</a>
+<a class = "button" href="#/recs"ng-hide="user==''">Recommendations</a>
+<a class = "button" href="#/login" ng-hide="user==''" ng-click="logout()">Log out</a>
+
 <div ng-view></div>
 
   <!-- Scripts -->
@@ -46,6 +64,7 @@
   <script src="./lib/jquery-2.1.3.min/index.js"></script>
   <script src="./foundation6_lib/js/foundation.min.js"></script>
   <script src="./js/script.js"></script>
+
 
   <script>
     $(document).foundation();

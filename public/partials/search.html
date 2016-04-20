@@ -15,7 +15,7 @@ Search: <input ng-model="query">
 
             <ul class="restaurantNames" style="list-style-type: none;">
                     <li ng-repeat="restaurant in restaurants | filter:query">
-                        <h3 class = "restaurantName">{{restaurant.name}}</a></h3>
+                        <h3 class = "restaurantName"><a href="#viewRestaurants/{{restaurant.location}}">{{restaurant.name}}</a> | {{restaurant.location}}</h3>
                     </li>
             </ul>
 

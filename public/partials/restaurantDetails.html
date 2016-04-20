@@ -1,11 +1,30 @@
+<div  ng-controller="restaurantDetailsCtrl">
+
 <h1>Name: {{restaurant.name}}</h1>
 
 <h1>Location:</h1> {{restaurant.location}}
 <h1>Quality Rating:</h1> {{restaurant.qualityrating}}
 <h1>Price Rating:</h1> {{restaurant.pricerating}}
 <h1>Foodstyle:</h1> {{restaurant.foodstyle}}
+
+
+    <h1> Reviews by username</h1>
+    <table>
+        <tr>
+            <th>Username</th>
+            <th ng-hide="user!='admin'">Delete Review</th>
+        </tr>
+        <tr ng-repeat="review in reviews">
+            <td><a href="#reviews/{{review.username}}/{{review.location}}">{{review.username}}</a></td>
+            <td ng-hide="user!='admin'"><button ng-click="deleteReview(review)" class="button" style="background-color:red;" ng-hide="user!='admin'">Delete Review</button></td>
+        </tr>
+    </table>
+
+<!--
 <ul>
 <li ng-repeat="review in reviews">
-    <a href="#reviews/{{review.username}}/{{review.location}}">{{review.username}}</a><button ng-click="deleteReview(review)" class="button" style="background-color:red;">Delete Review</button>
+    <a href="#reviews/{{review.username}}/{{review.location}}">{{review.username}}</a><button ng-click="deleteReview(review)" class="button" style="background-color:red;" ng-hide="user!='admin'">Delete Review</button>
 </li>
     </ul>
+-->
+</div>

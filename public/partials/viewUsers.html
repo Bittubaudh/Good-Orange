@@ -5,13 +5,28 @@
 </div>
 <div class="col-md-10">
     <!--Body content-->
-
+    Search: <input ng-model="query">
+    <br>
+    <br>
+    <br>
+    <table>
+        <tr>
+            <th>Username</th>
+            <th ng-hide="user!='admin'">Delete User</th>
+        </tr>
+        <tr ng-repeat="user1 in users | orderBy: orderProp | filter:query">
+            <td><a href="#viewUsers/{{user1.username}}">{{user1.username}}</a></td>
+            <td ng-hide="user!='admin'"><button ng-click="deleteUser(user1)" class="button" style="background-color:red;" ng-hide="user!='admin'">Delete User</button></td>
+        </tr>
+    </table>
+<!--
     <ul style="list-style-type: none;">
-        <li ng-repeat="user in users | orderBy: orderProp">
-            <h3><a href="#viewUsers/{{user.username}}">{{user.username}}</a></h3>
+        <li ng-repeat="user1 in users | orderBy: orderProp">
+            <h3><a href="#viewUsers/{{user1.username}}">{{user1.username}}</a><button ng-click="deleteUser(user1)" class="button" style="background-color:red;" ng-hide="user!='admin'">Delete User</button></h3>
 
         </li>
     </ul>
+-->
 
 </div>
 </div>

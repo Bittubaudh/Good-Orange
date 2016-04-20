@@ -1,5 +1,19 @@
+<div  ng-controller="recsCtrl">
 <select ng-model="recType"\>
-    <option value="normal">Feeling lucky</option>
+    <option value="normal">Normal</option>
     <option value="location">By location</option>
 </select><br>
 <button ng-click="getRec()" class = "button">Get recommendation</button>
+
+<h1>Recommended Restaurants</h1>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Location</th>
+    </tr>
+    <tr ng-repeat="restaurant in restaurants | orderBy: orderProp">
+        <td><a href="#viewRestaurants/{{restaurant.location}}">{{restaurant.name}}</a></td>
+        <td>{{restaurant.location}}</td>
+    </tr>
+</table>
+    </div>

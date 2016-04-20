@@ -57,7 +57,11 @@ app.config(['$routeProvider',
         templateUrl: 'partials/recs.html',
         controller: 'recsCtrl'
     }).
+    when('/changePassword', {
+        templateUrl: 'partials/changePassword.html',
+        controller: 'changePasswordCtrl'
+    }).
     otherwise({
-        redirectTo: '/home'
+        redirectTo: '/login'
     });
 }]);
