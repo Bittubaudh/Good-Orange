@@ -66,7 +66,4 @@ module.exports = function(app, pg) {
   app.get('/recommendations/byHistory/:username', function(req, res) {
     adv.getRecommendationsByHistory(req, pg, res, handleResponse);
   });
-  app.get('/recommendations/byLocation/:username', function(req, res) {
-    adv.getRecommendationsByLocation(req, pg, res, handleResponse);
-  });
 }

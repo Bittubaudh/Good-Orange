@@ -123,39 +123,5 @@ module.exports = {
             });
         });
     });
-  },
-
-  getRecommendationsByLocation: function(req, pg, res, cb) {
-    /*pg.connect("postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj", 
-      function(err, client, done) {
-      if(err) {done(); console.log(err);}
-      console.log("Connected to DB, getting schemas....");
-
-      restaurants = [];
-
-      var locs = req.body.locations
-      if(locs.length > 0) {
-        queryString = "SELECT * FROM restaurant WHERE (";
-
-        for(var i = 0; i < locs.length-1; i++) {
-          var l = locs[i].replace(/\'/g, "\'\'");
-          queryString += "location='" + l +"' OR ";
-        }
-
-        queryString += "location='" + locs[locs.length-1].replace(/\'/g, "\'\'") + "');";
-
-        client
-          .query(queryString)
-          .on('row', function(row) {
-            restaurants.push(row);
-          })
-          .on('end', function() {
-            done();
-            cb(restaurants, res);
-          });
-      else {
-        done();
-        */cb({"message":"No restaurants returned in vicinity"}, res);/*
-      }*/
   }
 }
