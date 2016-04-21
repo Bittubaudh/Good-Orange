@@ -384,7 +384,8 @@ restaurantController.controller('viewUsersCtrl', ['$scope', '$routeParams', '$fi
     }]);
 
 restaurantController.controller('recsCtrl', ['$scope', '$routeParams', '$filter','$http', '$rootScope','$window',
-    function($scope, $routeParams, $filter, $http, $rootScope, $window) {
+    function($scope, $routeParams, $filter, $http, $rootScope, $window) 
+    {
         $scope.orderProp = 'name';
 
         $scope.user = $window.sessionStorage.user;
@@ -399,43 +400,116 @@ restaurantController.controller('recsCtrl', ['$scope', '$routeParams', '$filter'
         $scope.address = "";
         $scope.city = "";
         $scope.state = "";
-        $scope.zipcode = "";
-        $scope.distance = 2;
+        $scope.inputzip = "";
+        $scope.distance = 3219;
         $scope.minPrice = 0;
         $scope.maxPrice = 4;
         $scope.openNow = false;
-        $scope.foodStyle = "";
-        $scope.rankBy = google.maps.places.RankBy.PROMINENCE;
+        $scope.foodStyle = "restaurant";
         $scope.locationInfo = "";
+        $scope.error = "";
+        $scope.recType = "normal";
+        $scope.locType = "predef";
+        $scope.zipcode = 0;
 
-        var latlng;
-        var latitude;
-        var longitude;
+        $scope.latlng = "";
+        $scope.latitude = 0;
+        $scope.longitude = 0;
+
+        $scope.savedContainerName;
+        $scope.savedContainerAddress;
+
         var container = document.getElementById('locResults');
+
+        function callback(results, status)
+        {
+            $scope.savedContainerAddress = [];
+            $scope.savedContainerName = [];
+            //console.log(status);
+            if(status == google.maps.places.PlacesServiceStatus.OK)
+            {
+                console.log("callback success");
+                for (var i = 0; i < results.length; i++) {
+                    container.innerHTML += results[i].name + '<br />';
+                    $scope.savedContainerName[i] = results[i].name;
+                    $scope.savedContainerAddress[i] = results[i].vicinity;
+                //console.log(results);
+                }
+                console.log($scope.savedContainerName);
+                console.log($scope.savedContainerAddress);
+            }
+            else
+            {
+                container.innerHTML = "No results found. Please try again.";
+            }
+
+                $http.get('/recommendations/byHistory/' + $scope.user).success(function(data){
+                    $scope.prefilter_restaurants = data;
+
+                    var k = 0;
+
+                    console.log("swag");
+                    console.log($scope.prefilter_restaurants);
+                    console.log($scope.savedContainerName);
+                    console.log($scope.restaurants);
+                    $scope.restaurants = [];
+                    console.log($scope.restaurants);
+                    for(var i = 0; i < $scope.prefilter_restaurants.length; i++)
+                    {
+                        for(var j = 0; j < $scope.savedContainerName.length; j++)
+                        {
+                            if($scope.prefilter_restaurants[i].name == $scope.savedContainerName[j])
+                            {
+                                $scope.restaurants.push({name: $scope.savedContainerName[j],
+                                                         location: $scope.savedContainerAddress[j]});
+                                //$scope.restaurants[k].name = $scope.savedContainerName[j];
+                                //$scope.restaurants[k].location = $scope.savedContainerAddress[j];
+                                //$scope.restaurants[k].avg = 0;
+                                k++;
+                            }
+                        }
+                    }
+                });
+                
+        };
+
+        $http.get('/api/v1/customers/' + $rootScope.user).success(function(data) {
+            $scope.zipcode = data.zipcode;
+            $http.get("http://maps.googleapis.com/maps/api/geocode/json?address=" + $scope.zipcode).success(function(result){
+                $scope.latitude = result.results[0].geometry.location.lat;
+                $scope.longitude = result.results[0].geometry.location.lng;
+                console.log("Latitude: " + $scope.latitude + " Longitude: " + $scope.longitude);
+                locationInfo = "Latitude: " + $scope.latitude + " Longitude: " + $scope.longitude;
+            });
+        });
 
 //        use this when we figure out how to grab zipcode
 //        $http.get("http://maps.googleapis.com/maps/api/geocode/json?address=" + )
         $scope.getLocation = function() {
-            if(navigator.getLocation)
+            if(navigator.geolocation)
             {
-                navigator.geolocation.getCurrentPosition($scope.showPosition, $scope.showError);
+                navigator.geolocation.getCurrentPosition(showPosition, $scope.showError, {maximumAge:60000, timeout:1000, enableHighAccuracy:true});
             }
             else
             {
-                $scope.error = "Geolocation not support by browser."
+                $scope.error = "Geolocation not support by browser.";
             }
         };
 
-        $scope.showPosition = function() {
-            latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
+        function showPosition(position) {
+            $scope.latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            $scope.latitude = position.coords.latitude;
+            $scope.longitude = position.coords.longitude;
             $scope.locationInfo = "Latitude: " + position.coords.latitude + ", Longitude: " + position.coords.longitude;
-        }
+        };
 
-        });
+        $scope.getRec = function()
+        {
+            $scope.error = "";
 
-        $scope.getRec = function(){
             if($scope.recType=='normal')
             {
+                $scope.restaurants = [];
                 $http.get('/recommendations/byHistory/' + $scope.user).success(function(data){
                     $scope.restaurants = data;
                 });
@@ -443,72 +517,77 @@ restaurantController.controller('recsCtrl', ['$scope', '$routeParams', '$filter'
             else //by location
             {
                 var latlngurl;
+                latlngurl = "";
 
                 if($scope.locType == "user") // already grabbed by getlocation
+                {
+                    $scope.latlng = new google.maps.LatLng($scope.latitude, $scope.longitude);
+
+                    var request = {
+                        location: $scope.latlng,
+                        radius: $scope.distance,
+                        keyword: $scope.foodStyle,
+                        minPriceLevel: $scope.minPrice,
+                        maxPriceLevel: $scope.maxPrice,
+                        openNow: $scope.openNow,
+                        type: "restaurant"
+                    };
+
+                    var service = new google.maps.places.PlacesService(container);
+                    service.nearbySearch(request, callback);
+                    //console.log(request);
+                }
 
                 else // predef
                 {
                     latlngurl = "http://maps.googleapis.com/maps/api/geocode/json?address=";
-                    if($scope.address == "" && $scope.city == "" && $scope.state == "" && $scope.zipcode == "")
+                    if($scope.address == "" && $scope.city == "" && $scope.state == "" && $scope.inputzip == "")
                         $scope.error = "Predefined address is undefined. Please try again.";
                     if($scope.address != "")
                     {
                         $scope.address.replace(/ /g, "+");
-                        latlngurl.append($scope.address + ",+");
+                        latlngurl = latlngurl + $scope.address + ",+";
                     }
                     if($scope.city != "")
                     {
                         $scope.city.replace(/ /g, "+");
-                        latlngurl.append($scope.city + ",+");
+                        latlngurl = latlngurl + $scope.city + ",+";
                     }
                     if($scope.state != "")
                     {
                         $scope.state.replace(/ /g, "+");
-                        latlngurl.append($scope.state + ",+");
+                        latlngurl = latlngurl + $scope.state + ",+";
                     }
-                    if($scope.zipcode != "")
+                    if($scope.inputzip != "")
                     {
-                        $scope.zipcode.replace(/ /g, "+");
-                        latlngurl.append($scope.zipcode + ",+")
+                        $scope.inputzip.replace(/ /g, "+");
+                        latlngurl = latlngurl + $scope.inputzip + ",+";
                     }
                     latlngurl = latlngurl.substring(0,latlngurl.length - 2);
-                
-                    $http.get(latlngurl).success(function(data) {
-                        latitude = data[0].geometry.location.lat();
-                        longitutde = data[0].geometry.location.lng();
-                    };
 
-                    latlng = new google.maps.LatLng(latitude, longitude);
-                }
-            
-                var request = {
-                    location: latlng,
-                    radius: $scope.distance,
-                    keyword: $scope.foodStyle,
-                    minPriceLevel: $scope.minPrice,
-                    maxPriceLevel: $scope.maxPrice,
-                    openNow: $scope.openNow,
-                    rankBy: $scope.rankBy,
-                    type: restaurant
-                };
+                    $http.get(latlngurl).success(function(results) {
+                        $scope.latitude = results.results[0].geometry.location.lat;
+                        $scope.longitude = results.results[0].geometry.location.lng;
+                        $scope.latlng = new google.maps.LatLng($scope.latitude, $scope.longitude);
 
-                var service = new google.maps.places.PlacesService(container);
-                service.nearbySearch(request, callback);
+                        var request = {
+                            location: $scope.latlng,
+                            radius: $scope.distance,
+                            keyword: $scope.foodStyle,
+                            minPriceLevel: $scope.minPrice,
+                            maxPriceLevel: $scope.maxPrice,
+                            openNow: $scope.openNow,
+                            type: "restaurant"
+                        };
 
-                function callback(results, status)
-                {
-                    if(status == google.maps.places.PlacesServiceStatus.OK)
-                        for (var i = 0; i < results.length; i++) {
-                            container.innerHTML += results[i].name + '<br />';
-                        }
+                        var service = new google.maps.places.PlacesService(container);
+                        service.nearbySearch(request, callback);
+                        //console.log(request);
+
+                    });
                 }
             }
-
-
-
         };
-
-
     }]);
 
 restaurantController.controller('reviewDetailsCtrl', ['$scope', '$routeParams', '$filter','$http', '$rootScope', '$window',
