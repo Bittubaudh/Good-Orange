@@ -435,8 +435,8 @@ restaurantController.controller('recsCtrl', ['$scope', '$routeParams', '$filter'
                     $scope.savedContainerAddress[i] = results[i].vicinity;
                 //console.log(results);
                 }
-                console.log($scope.savedContainerName);
-                console.log($scope.savedContainerAddress);
+                //console.log($scope.savedContainerName);
+                //console.log($scope.savedContainerAddress);
             }
             else
             {
@@ -448,20 +448,28 @@ restaurantController.controller('recsCtrl', ['$scope', '$routeParams', '$filter'
 
                     var k = 0;
 
-                    console.log("swag");
-                    console.log($scope.prefilter_restaurants);
-                    console.log($scope.savedContainerName);
-                    console.log($scope.restaurants);
+                    //console.log("swag");
+                    //console.log($scope.prefilter_restaurants);
+                    //console.log($scope.savedContainerName);
+                    //console.log($scope.restaurants);
                     $scope.restaurants = [];
                     console.log($scope.restaurants);
                     for(var i = 0; i < $scope.prefilter_restaurants.length; i++)
                     {
                         for(var j = 0; j < $scope.savedContainerName.length; j++)
                         {
-                            if($scope.prefilter_restaurants[i].name == $scope.savedContainerName[j])
+                            var res1 = $scope.prefilter_restaurants[i].location.split(" ");
+                            var number1 = res1[0];
+                            var res2 = $scope.savedContainerAddress[j].split(" ");
+                            var number2 = res2[0];
+                            // console.log("number1: " + number1 + " number2: " + number2);
+                            // console.log($scope.savedContainerName[j]);
+                            // console.log($scope.prefilter_restaurants[i].name);
+
+                            if(number1 == number2 && $scope.savedContainerName[j] == $scope.prefilter_restaurants[i].name)
                             {
                                 $scope.restaurants.push({name: $scope.savedContainerName[j],
-                                                         location: $scope.savedContainerAddress[j]});
+                                                         location: $scope.prefilter_restaurants[i].location});
                                 //$scope.restaurants[k].name = $scope.savedContainerName[j];
                                 //$scope.restaurants[k].location = $scope.savedContainerAddress[j];
                                 //$scope.restaurants[k].avg = 0;
