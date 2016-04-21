@@ -416,6 +416,8 @@ restaurantController.controller('recsCtrl', ['$scope', '$routeParams', '$filter'
         $scope.latitude = 0;
         $scope.longitude = 0;
 
+        $scope.noRecommendations = "";
+
         $scope.savedContainerName;
         $scope.savedContainerAddress;
 
@@ -477,6 +479,15 @@ restaurantController.controller('recsCtrl', ['$scope', '$routeParams', '$filter'
                             }
                         }
                     }
+
+                    if(k == 0)
+                    {
+                        $scope.noRecommendations = "No Recommendations Found. Please try again.";
+                    }
+                    else
+                    {
+                        $scope.noRecommendations = "";
+                    }
                 });
                 
         };
@@ -514,12 +525,14 @@ restaurantController.controller('recsCtrl', ['$scope', '$routeParams', '$filter'
         $scope.getRec = function()
         {
             $scope.error = "";
-
+            $scope.noRecommendations == "";
+            console.log($scope.noRecommendations);
             if($scope.recType=='normal')
             {
                 $scope.restaurants = [];
                 $http.get('/recommendations/byHistory/' + $scope.user).success(function(data){
                     $scope.restaurants = data;
+                    $scope.noRecommendations = "";
                 });
             }
             else //by location

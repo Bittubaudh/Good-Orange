@@ -9,11 +9,13 @@
         <tr>
             <th>Name</th>
             <th>Location</th>
+            <th>Food style</th>
             <th ng-hide="user!='admin'">Delete Restaurant</th>
         </tr>
         <tr ng-repeat="restaurant in restaurants | orderBy: orderProp | filter:query">
             <td><a href="#viewRestaurants/{{restaurant.location}}">{{restaurant.name}}</a></td>
             <td>{{restaurant.location}}</td>
+            <td>{{restaurant.foodstyle}}</td>
             <td ng-hide="user!='admin'"><button ng-click="deleteRestaurant(restaurant)" class="button" style="background-color:red;" ng-hide="user!='admin'">Delete Restaurant</button></td>
         </tr>
     </table>
