@@ -431,7 +431,7 @@ restaurantController.controller('recsCtrl', ['$scope', '$routeParams', '$filter'
             if(status == google.maps.places.PlacesServiceStatus.OK)
             {
                 console.log("callback success");
-                container.innerHTML = "Restaurants found nearby: " + '<br />';
+                container.innerHTML = '<b>' + "Restaurants found nearby: " + '</b>' + '<br />';
                 for (var i = 0; i < results.length; i++) {
                     container.innerHTML += results[i].name + '<br />';
                     $scope.savedContainerName[i] = results[i].name;
