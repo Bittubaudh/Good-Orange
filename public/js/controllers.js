@@ -433,7 +433,7 @@ restaurantController.controller('recsCtrl', ['$scope', '$routeParams', '$filter'
                 console.log("callback success");
                 container.innerHTML = '<h4>' + '<b>' + "Restaurants found nearby: " + '</b>' + '</h4>' + '<br />';
                 for (var i = 0; i < results.length; i++) {
-                    container.innerHTML += results[i].name + '<br />';
+                    container.innerHTML += results[i].name + " | " + results[i].vicinity + '<br />';
                     $scope.savedContainerName[i] = results[i].name;
                     $scope.savedContainerAddress[i] = results[i].vicinity;
                 //console.log(results);
