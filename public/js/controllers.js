@@ -465,9 +465,9 @@ restaurantController.controller('recsCtrl', ['$scope', '$routeParams', '$filter'
                             var number1 = res1[0];
                             var res2 = $scope.savedContainerAddress[j].split(" ");
                             var number2 = res2[0];
-                            // console.log("number1: " + number1 + " number2: " + number2);
-                            // console.log($scope.savedContainerName[j]);
-                            // console.log($scope.prefilter_restaurants[i].name);
+                            console.log("number1: " + number1 + " number2: " + number2);
+                            console.log($scope.savedContainerName[j]);
+                            console.log($scope.prefilter_restaurants[i].name);
 
                             if(number1 == number2 && $scope.savedContainerName[j] == $scope.prefilter_restaurants[i].name)
                             {
