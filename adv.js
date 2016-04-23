@@ -15,7 +15,7 @@ module.exports = {
       {'location': '', 'name': '', 'avg': 0}
     ];
 
-    pg.connect("postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj", 
+    pg.connect(process.env.DATABASE_URL, 
       function(err, client, done) {
       if(err) {done(); console.log(err);}
       console.log("Connected to DB, getting schemas....");

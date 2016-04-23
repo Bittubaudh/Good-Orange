@@ -1,7 +1,7 @@
 module.exports = {
   getAllRestaurants: function(pg, res, cb) {
     var results = [];
-    pg.connect("postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj", 
+    pg.connect(process.env.DATABASE_URL, 
       function(err, client, done) {
       if(err) {done(); console.log(err);}
       console.log("Connected to DB, getting schemas....");
@@ -22,7 +22,7 @@ module.exports = {
 
     var results = [];
 
-    pg.connect("postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj", 
+    pg.connect(process.env.DATABASE_URL, 
       function(err, client, done) {
       if(err) {done(); console.log(err);}
       console.log("Connected to DB, getting schemas...");
@@ -55,7 +55,7 @@ module.exports = {
       'contents': {}
     };
 
-    pg.connect("postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj", 
+    pg.connect(process.env.DATABASE_URL, 
       function(err, client, done) {
       if(err) {
         done();
@@ -113,7 +113,7 @@ module.exports = {
 
 
 
-    pg.connect("postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj", 
+    pg.connect(process.env.DATABASE_URL, 
       function(err, client, done) {
       if(err) {
         done();
@@ -141,7 +141,7 @@ module.exports = {
   getRestaurantByLocation: function(req, pg, res, cb) {
     var results = [];
 
-    pg.connect("postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj", 
+    pg.connect(process.env.DATABASE_URL, 
       function(err, client, done) {
       if(err) {done(); console.log(err);}
       console.log("Connected to DB, getting schemas...");
@@ -162,7 +162,7 @@ module.exports = {
   },
 
   deleteRestaurantByLocation: function(req, pg, res, cb) {
-    pg.connect("postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj", 
+    pg.connect(process.env.DATABASE_URL, 
       function(err, client, done) {
       if(err) {done(); console.log(err);}
       console.log("Connected to DB, getting schemas...");
@@ -191,7 +191,7 @@ module.exports = {
   getAllCustomers: function(pg, res, cb) {
     var results = [];
 
-    pg.connect("postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj", 
+    pg.connect(process.env.DATABASE_URL, 
       function(err, client, done) {
       if(err) {done(); console.log(err);}
       console.log("Connected to DB, getting schemas....");
@@ -241,7 +241,7 @@ module.exports = {
     var hashedpassword = tohex(H0)+tohex(H1)+tohex(H2)+tohex(H3)+tohex(H4);
 
 
-    pg.connect("postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj", 
+    pg.connect(process.env.DATABASE_URL, 
       function(err, client, done) {
       if(err) {
         done();
@@ -281,7 +281,7 @@ module.exports = {
   },
 
   deleteCustomerByUN: function(req, pg, res, cb) {
-    pg.connect("postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj", 
+    pg.connect(process.env.DATABASE_URL, 
       function(err, client, done) {
       if(err) {done(); console.log(err);}
       console.log("Connected to DB, getting schemas...");
@@ -375,7 +375,7 @@ module.exports = {
     }
     var hashedpassword = tohex(H0)+tohex(H1)+tohex(H2)+tohex(H3)+tohex(H4);
 
-    pg.connect("postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj", 
+    pg.connect(process.env.DATABASE_URL, 
       function(err, client, done) {
       if(err) {done(); console.log(err);}
       console.log("Connected to DB, getting schemas...");
@@ -406,7 +406,7 @@ module.exports = {
   getCustomerByUN: function(req, pg, res, cb) {
     var results = [];
 
-    pg.connect("postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj", 
+    pg.connect(process.env.DATABASE_URL, 
       function(err, client, done) {
       if(err) {done(); console.log(err);}
       console.log("Connected to DB, getting schemas...");
@@ -425,7 +425,7 @@ module.exports = {
 
   getReviewByUN: function(req, pg, res, cb) {
     var results = [];
-    pg.connect("postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj", 
+    pg.connect(process.env.DATABASE_URL, 
       function(err, client, done) {
       if(err) {done(); console.log(err);}
       console.log("Connected to DB, getting schemas...");
@@ -445,7 +445,7 @@ module.exports = {
   getReviewByLocationAndUN: function(req, pg, res, cb) {
     var results = [];
 
-    pg.connect("postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj", 
+    pg.connect(process.env.DATABASE_URL, 
       function(err, client, done) {
       if(err) {done(); console.log(err);}
       console.log("Connected to DB, getting schemas...");
@@ -467,7 +467,7 @@ module.exports = {
   getReviewByLocation: function(req, pg, res, cb) {
     var results = [];
 
-    pg.connect("postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj", 
+    pg.connect(process.env.DATABASE_URL, 
       function(err, client, done) {
       if(err) {done(); console.log(err);}
       console.log("Connected to DB, getting schemas...");
@@ -494,7 +494,7 @@ module.exports = {
       'contents': {}
     };
 
-    pg.connect("postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj", 
+    pg.connect(process.env.DATABASE_URL, 
       function(err, client, done) {
       if(err) {
         done();
@@ -559,7 +559,7 @@ module.exports = {
   getAllReviews: function(pg, res, cb) {
     var results = [];
 
-    pg.connect("postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj", 
+    pg.connect(process.env.DATABASE_URL, 
       function(err, client, done) {
       if(err) {done(); console.log(err);}
       console.log("Connected to DB, getting schemas...");
@@ -577,7 +577,7 @@ module.exports = {
   },
 
   deleteReviewByUNandLocation: function(req, pg, res, cb) {
-    pg.connect("postgres://vgokgwmllyuvta:Y8jxNsM8vZOTSxd-fMBfvlqrF2@ec2-54-235-152-114.compute-1.amazonaws.com:5432/d51ijnnak3emfj", 
+    pg.connect(process.env.DATABASE_URL, 
       function(err, client, done) {
       if(err) {done(); console.log(err);}
       console.log("Connected to DB, getting schemas...");
